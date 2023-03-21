@@ -1,0 +1,100 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+library(tidygeocoder)
+```
+
+```{r}
+df <- read_csv("funda_buy_17-03-2023.csv")
+```
+
+```{r}
+model <- lm(data = df, price~room +living_area + house_age + house_type)
+summary(model)
+```
+
+
+```{r}
+
+
+df_new <- df %>% 
+  top_n(10) %>% 
+  mutate(adddreszip = paste0(address, ", Noord-Holland")) %>% 
+  geocode(adddreszip, method = 'osm', lat = latitude , long = longitude)
+
+```
+
+```{r}
+easypackages::packages ("sf", "sp", "spdep", "spatialreg", "GWmodel", "tmap", "mapview", "car", "RColorBrewer", 
+                        "cowplot", "leafsync", "leaflet.extras2", "mapview", "tidyverse")
+
+
+```
+
+```{r}
+library(sf)
+df_sp <- df_new %>% drop_na()
+x = st_as_sf(df_sp, coords = c( "longitude", "latitude"), crs = 4326)
+x <- st_transform(x, crs = 28992)
+st_write(x, "test.gpkg")
+
+
+```
+
+```{r}
+
+qtm(x)
+```
+```{r}
+greendata_sp <- as_Spatial(x)
+
+#fit the adaptive kernel 
+#find adaptive kernel using gaussian function
+abw <- bw.gwr(price~room +living_area + house_age,
+             approach = "AIC", #specified by CV for cross-validation approach or by AIC corrected (AICc), we used AIC 
+             adaptive = TRUE,
+             kernel="gaussian", #this can be different function e.g., bisquare,exponential, depend on the prior understanding or choice of the modeler
+             data=greendata_sp) #give the sp data created earlier
+```
+
+```{r}
+#fitting the model with gwr.basic function
+a.gwr <- gwr.basic(price~room +living_area + house_age, #the equation
+             adaptive = TRUE,
+             kernel="gaussian", #indicate the Kernel again
+             bw = 17, #give the optimal bandwidth we found in the last stage
+             data=greendata_sp) 
+
+#print the model result
+a.gwr
+```
+```{r}
+multiGWR <- gwr.multiscale(price~room +living_area + house_age, 
+                        data = greendata_sp,
+                        adaptive = T, 
+                        max.iterations = 10, #usually large number to make sure each variable converage to best bandwidth
+                        criterion="CVR", #criterion for determining the convergence of the back-fitting procedure
+                        kernel = "bisquare", #kernel can also be gaussian, exponential
+                        bws0=c(10,10,10), #starting number of neighbors  
+                        verbose = F, predictor.centered=rep(T, 6)) 
+```
+
+```{r}
+multiGWR
+```
+
+
+
+```{r}
+library(leaflet)
+leaflet(df_new) %>% addTiles() %>%
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
+             popup = ~address)
+```
+
+
