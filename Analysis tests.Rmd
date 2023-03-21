@@ -3,53 +3,71 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-
 ```{r}
 library(tidyverse)
 library(tidygeocoder)
+library(leaflet)
+library(sf)
+library(tmap)
+library(spatialreg)
+library(GWmodel)
+library(RColorBrewer)
+library(mapview)
+library(leafsync)
 ```
 
 ```{r}
-df <- read_csv("funda_buy_17-03-2023.csv")
+df <- read_csv("data/funda_buy_21-03-2023(sample100p).csv")
+
+str(df)
+df <-  df %>% 
+  mutate(house_type = factor(house_type),
+         building_type = factor(building_type),
+         energy_label = factor(energy_label),
+         has_balcony = factor(has_balcony),
+         has_garden = factor(has_garden))
+str(df)
+  
 ```
 
 ```{r}
-model <- lm(data = df, price~room +living_area + house_age + house_type)
+model <- lm(data = df, price~room +living_area + house_age)
 summary(model)
 ```
 
-
 ```{r}
-
-
-df_new <- df %>% 
+df_test <- df %>% 
   top_n(10) %>% 
-  mutate(adddreszip = paste0(address, ", Noord-Holland")) %>% 
-  geocode(adddreszip, method = 'osm', lat = latitude , long = longitude)
+  separate(address_line, c("zip", "letters", "city", "optional1","optional2", "optional3", "optional4"), " ") %>% 
+  mutate(addressline_city = paste(city, optional1, optional2, optional3, optional4),
+         addressline_zip = paste(zip, letters),
+         addresszip = paste0(address, ", ",addressline_zip, ", ", city, ", Nederland")) %>% 
+  select(-optional1, -optional2, -optional3, -optional4) %>% 
+  geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
 
 ```
-
 ```{r}
-easypackages::packages ("sf", "sp", "spdep", "spatialreg", "GWmodel", "tmap", "mapview", "car", "RColorBrewer", 
-                        "cowplot", "leafsync", "leaflet.extras2", "mapview", "tidyverse")
 
-
+leaflet(df_new) %>% addTiles() %>%
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
+             popup = ~address)
 ```
 
+
 ```{r}
-library(sf)
+
 df_sp <- df_new %>% drop_na()
 x = st_as_sf(df_sp, coords = c( "longitude", "latitude"), crs = 4326)
 x <- st_transform(x, crs = 28992)
-st_write(x, "test.gpkg")
-
-
+st_write(x, "data/test/test_sample(100p).gpkg")
+x <- st_read("data/test/test_sample(100p).gpkg")
 ```
 
 ```{r}
 
 qtm(x)
 ```
+
 ```{r}
 greendata_sp <- as_Spatial(x)
 
@@ -67,34 +85,41 @@ abw <- bw.gwr(price~room +living_area + house_age,
 a.gwr <- gwr.basic(price~room +living_area + house_age, #the equation
              adaptive = TRUE,
              kernel="gaussian", #indicate the Kernel again
-             bw = 17, #give the optimal bandwidth we found in the last stage
+             bw = 19, #give the optimal bandwidth we found in the last stage
              data=greendata_sp) 
 
 #print the model result
 a.gwr
 ```
+
 ```{r}
 multiGWR <- gwr.multiscale(price~room +living_area + house_age, 
                         data = greendata_sp,
                         adaptive = T, 
                         max.iterations = 10, #usually large number to make sure each variable converage to best bandwidth
                         criterion="CVR", #criterion for determining the convergence of the back-fitting procedure
-                        kernel = "bisquare", #kernel can also be gaussian, exponential
+                        kernel = "gaussian", #kernel can also be gaussian, exponential
                         bws0=c(10,10,10), #starting number of neighbors  
-                        verbose = F, predictor.centered=rep(T, 6)) 
+                        verbose = F, predictor.centered=rep(T, 6),
+                        parallel.method = "omp") 
 ```
 
 ```{r}
 multiGWR
 ```
 
-
-
 ```{r}
-library(leaflet)
-leaflet(df_new) %>% addTiles() %>%
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
-             popup = ~address)
+mgwr_sf = st_as_sf(multiGWR$SDF)
+st_write(mgwr_sf, "data/test/test_sample(100p)_predictions.gpkg")
 ```
 
+```{r}
+mgwrM1 <- mapview::mapview(mgwr_sf, zcol = "room", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
+mgwrM2 <- mapview::mapview(mgwr_sf, zcol = "living_area", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
+mgwrM3 <- mapview::mapview(mgwr_sf, zcol = "house_age", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
+```
+
+```{r}
+sync(mgwrM1, mgwrM2, mgwrM3)
+```
 
