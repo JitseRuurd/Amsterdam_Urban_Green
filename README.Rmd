@@ -1,0 +1,42 @@
+---
+title: "Explaining Noord-Holland house prices"
+author: "Yúri Grings, Thomas Nibbering, Jitse Ruurd Nauta"
+date: "2023-03-21"
+output: github_document
+---
+
+```{=html}
+<style type="text/css">
+  body{
+  font-size: 12pt;
+  font-family:Cambria;
+  text-align: justify;
+}
+headers{
+text-align: left;
+
+}
+</style>
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# "Explaining Noord-Holland house prices"
+
+A Spatial Statistics and Spatial Machine Learning approach.
+
+Included data of the research was scraped from Funda. Below map gives an overview of the scope of the data.
+
+```{r}
+library(leaflet)
+df <- read.csv('data/test/funda_buy_21-03-2023(sample100p)latlon.csv')
+
+
+leaflet(df) %>% addTiles() %>%
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
+             popup = ~address)
+```
+

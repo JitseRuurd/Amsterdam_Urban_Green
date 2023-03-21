@@ -17,7 +17,7 @@ library(leafsync)
 ```
 
 ```{r}
-df <- read_csv("data/funda_buy_21-03-2023(sample100p).csv")
+df <- read_csv("data/test/funda_buy_21-03-2023(sample100p).csv")
 
 str(df)
 df <-  df %>% 
@@ -36,14 +36,14 @@ summary(model)
 ```
 
 ```{r}
-df_test <- df %>% 
-  top_n(10) %>% 
+df_new <- df %>% 
   separate(address_line, c("zip", "letters", "city", "optional1","optional2", "optional3", "optional4"), " ") %>% 
   mutate(addressline_city = paste(city, optional1, optional2, optional3, optional4),
          addressline_zip = paste(zip, letters),
          addresszip = paste0(address, ", ",addressline_zip, ", ", city, ", Nederland")) %>% 
   select(-optional1, -optional2, -optional3, -optional4) %>% 
   geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
+write.csv(df_new,"data/funda_buy_21-03-2023(sample100p)latlon.csv")
 
 ```
 ```{r}
