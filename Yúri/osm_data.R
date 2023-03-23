@@ -24,3 +24,33 @@ train <-  opq(st_bbox(province_boundaries)) %>%
   osmdata_sf ()
 train_points <- st_as_sf (train$osm_points) %>% dplyr:: select(osm_id, amenity)
 
+############################################################ DISTANCES ###########################################################
+#Re-project the point layer from WGS to local projection to have unit in meter
+bikefac_points <-  st_transform (bikefac_points, 27700)
+
+#Re-project the point layer from WGS to local projection to have unit in meter
+shop_points <-  st_transform (Dailyshops_points, 27700)
+
+#now we would write our own function to estimate distance using nearest neighbor algorithm
+#This function take an origin point (from), and a destination point (to), and then use nn function of FNN package to estimate the distance to the nearest (k =1) neighborhood location
+nn_function <- function(measureFrom,measureTo,k) {
+  measureFrom_Matrix <- as.matrix(measureFrom)
+  measureTo_Matrix <- as.matrix(measureTo)
+  nn <-   
+    get.knnx(measureTo, measureFrom, k)$nn.dist [,k]
+  return(nn)
+}
+
+#now we will use the nn_function to measure the shortest distance from neighborhood centroid to  bike facilities (i.e., bikefac_points)
+#distance to bike facilities (shops, repair, parking)
+greendatacen <- greendatacen %>%
+  mutate(bikefac_dist_new = nn_function(st_coordinates(greendatacen$geom), st_coordinates(bikefac_points$geom), 1))
+
+#distance to shops
+greendatacen <- greendatacen %>%
+  mutate(Shop_dist_new = nn_function(st_coordinates(greendatacen$geom), st_coordinates(shop_points$geom), 1))
+
+#you can see the data frame and there is new column at the end.
+#view(greendatacen)
+
+#this is how you can convert the raw OSM data into a spatial indicator
