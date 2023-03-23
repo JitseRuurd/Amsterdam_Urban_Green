@@ -39,7 +39,7 @@ def get_package_path():
   return package_path
 
 def copy_scraper():
-    answer = query_yes_no(f"Package will be placed in: {get_package_path()}, is this the correct package directory?"):
+    answer = query_yes_no(f"Package will be placed in: {get_package_path()}, is this the correct package directory?")
     if answer:
         copy_tree("Scraper_library", get_package_path())
     elif answer != True:
