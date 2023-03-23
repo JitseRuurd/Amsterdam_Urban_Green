@@ -43,8 +43,10 @@ df_new <- df %>%
          addresszip = paste0(address, ", ",addressline_zip, ", ", city, ", Nederland")) %>% 
   select(-optional1, -optional2, -optional3, -optional4) %>% 
   geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
-write.csv(df_new,"data/funda_buy_21-03-2023(sample100p)latlon.csv")
-
+#write.csv(df_new,"data/funda_buy_21-03-2023(sample100p)latlon.csv")
+#df_new %>% 
+#  select(longitude, latitude, price, room, living_area, house_age) %>% 
+#  write.csv("data/test/mgwr.csv")
 ```
 ```{r}
 
@@ -93,33 +95,41 @@ a.gwr
 ```
 
 ```{r}
-multiGWR <- gwr.multiscale(price~room +living_area + house_age, 
+EUDM <- gw.dist(coordinates(greendata_sp))
+
+multiGWR_test <- gwr.multiscale(price~room +living_area + house_age, 
                         data = greendata_sp,
-                        adaptive = T, 
-                        max.iterations = 10, #usually large number to make sure each variable converage to best bandwidth
+                        max.iterations = 1,
+                        adaptive = T,  #usually large number to make sure each variable converage to best bandwidth
                         criterion="CVR", #criterion for determining the convergence of the back-fitting procedure
                         kernel = "gaussian", #kernel can also be gaussian, exponential
-                        bws0=c(10,10,10), #starting number of neighbors  
-                        verbose = F, predictor.centered=rep(T, 6),
-                        parallel.method = "omp") 
+                        bws0 =c(93,48,46,70),
+                        bw.seled = c(T,T,T,T), dMats=list(EUDM,EUDM,EUDM)) 
 ```
+```{r}
+gwr.predict(multiGWR_test, data = )
+```
+
 
 ```{r}
 multiGWR
 ```
 
 ```{r}
-mgwr_sf = st_as_sf(multiGWR$SDF)
-st_write(mgwr_sf, "data/test/test_sample(100p)_predictions.gpkg")
+#mgwr_sf = st_as_sf(multiGWR$SDF)
+#mgwr_sf <- st_read("test_sample(100p)_predictions")
+mgwr_sf <- st_read("data/test/test_mgwr.gpkg")
+
 ```
 
 ```{r}
 mgwrM1 <- mapview::mapview(mgwr_sf, zcol = "room", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
 mgwrM2 <- mapview::mapview(mgwr_sf, zcol = "living_area", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
 mgwrM3 <- mapview::mapview(mgwr_sf, zcol = "house_age", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
+mgwrM4 <- mapview::mapview(mgwr_sf, zcol = "residual", col.regions= brewer.pal(11, "PuOr"), map.type = "CartoDB.Positron")
 ```
 
 ```{r}
-sync(mgwrM1, mgwrM2, mgwrM3)
+sync(mgwrM1, mgwrM2, mgwrM3,mgwrM4)
 ```
 
