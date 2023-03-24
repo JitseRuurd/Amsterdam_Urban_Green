@@ -1,4 +1,5 @@
-easypackages::packages("sf", "sp", "osmdata")
+easypackages::packages("sf", "sp", "osmdata", "FNN")
+library(dplyr)
 
 #read_sf("data/Noord_holland_polygon.shp") %>%
  # st_transform(crs=4326) %>%
@@ -51,3 +52,5 @@ funda_data <- funda_data %>%
 #distance to train station
 funda_data <- funda_data %>%
   mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(train_points$geom), 1))
+
+st_write(funda_data, "data/test_sample_distances(100p).gpkg")
