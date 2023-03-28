@@ -1,0 +1,14 @@
+name: Noord-Holland
+
+channels:
+  - conda-forge
+  - pyviz
+
+dependencies:
+  - python=3.10
+  - geopandas
+  - pandas
+  - numpy
+  - multiprocessing
+  - mgwr
+  
