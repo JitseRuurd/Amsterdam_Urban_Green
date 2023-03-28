@@ -9,6 +9,7 @@ dependencies:
   - geopandas
   - pandas
   - numpy
-  - multiprocessing
   - mgwr
+  - pip:
+    - multiprocessing
   
