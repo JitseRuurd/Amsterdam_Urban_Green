@@ -8,7 +8,7 @@ library(dplyr)
 # POIs: school, university, hospital/clinic, shopping center/mall, train, subway, bus, supermarket/market
 
 province_boundaries <- st_read ("data/Noord_Holland.gpkg")
-funda_data <- st_read ("data/test_sample(100p).gpkg")
+funda_data <- st_read ("data/funda_buy_28-03-2023_full.gpkg")
 
 # Get OSM data
 bus <-  opq(st_bbox(province_boundaries)) %>%
@@ -106,4 +106,4 @@ funda_data <- funda_data %>%
 funda_data <- funda_data %>%
   mutate(supermarket_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(supermarket_points$geom), 1))
 
-#st_write(funda_data, "data/test_sample_distances(100p).gpkg")
+st_write(funda_data, "data/funda_buy_28-03-2023_full_distances.gpkg")
