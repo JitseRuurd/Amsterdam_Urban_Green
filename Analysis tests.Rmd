@@ -17,7 +17,7 @@ library(leafsync)
 ```
 
 ```{r}
-df <- read_csv("data/test/funda_buy_21-03-2023(sample100p).csv")
+df <- read_csv("Scraper/data/funda_buy_28-03-2023_full.csv")
 
 str(df)
 df <-  df %>% 
@@ -31,7 +31,7 @@ str(df)
 ```
 
 ```{r}
-model <- lm(data = df, price~room +living_area + house_age)
+model <- lm(data = df, price~ house_type + building_type + room + bedroom + bathroom + living_area + energy_label +has_balcony + has_garden + house_age)
 summary(model)
 ```
 
@@ -43,11 +43,22 @@ df_new <- df %>%
          addresszip = paste0(address, ", ",addressline_zip, ", ", city, ", Nederland")) %>% 
   select(-optional1, -optional2, -optional3, -optional4) %>% 
   geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
-#write.csv(df_new,"data/funda_buy_21-03-2023(sample100p)latlon.csv")
+#write.csv(df_new,"data/funda_buy_28-03-2023_full_latlon.csv")
 #df_new %>% 
 #  select(longitude, latitude, price, room, living_area, house_age) %>% 
 #  write.csv("data/test/mgwr.csv")
 ```
+```{r}
+#write.csv(df_new,"data/funda_buy_28-03-2023_full_latlon.csv")
+#df_sp <- df_new %>% drop_na()
+#x = st_as_sf(df_sp, coords = c( "longitude", "latitude"), crs = 4326)
+#x <- st_transform(x, crs = 28992)
+#st_write(x, "data/funda_buy_28-03-2023_full.gpkg")
+
+```
+
+
+
 ```{r}
 
 leaflet(df_new) %>% addTiles() %>%
@@ -58,11 +69,11 @@ leaflet(df_new) %>% addTiles() %>%
 
 ```{r}
 
-df_sp <- df_new %>% drop_na()
-x = st_as_sf(df_sp, coords = c( "longitude", "latitude"), crs = 4326)
-x <- st_transform(x, crs = 28992)
-st_write(x, "data/test/test_sample(100p).gpkg")
-x <- st_read("data/test/test_sample(100p).gpkg")
+#df_sp <- df_new %>% drop_na()
+#x = st_as_sf(df_sp, coords = c( "longitude", "latitude"), crs = 4326)
+#x <- st_transform(x, crs = 28992)
+#st_write(x, "data/test/test_sample(100p).gpkg")
+#x <- st_read("data/test/test_sample(100p).gpkg")
 ```
 
 ```{r}
