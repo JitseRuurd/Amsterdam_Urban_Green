@@ -5,15 +5,24 @@ Yúri Grings, Thomas Nibbering, Jitse Ruurd Nauta
 
 A Spatial Statistics and Spatial Machine Learning approach.
 
-Included data of the research was scraped from Funda. Below map gives an
-overview of the scope of the data.
+Below the structure, results, and some code of our research can be
+found.
+
+Kind regards,
+
+Yúri Grings [Linkedin](https://www.linkedin.com/in/yurigrings/), Thomas
+Nibbering [Linkedin](https://www.linkedin.com/in/thomas-nibbering/),
+Jitse Ruurd Nauta
+[Linkedin](https://www.linkedin.com/in/jitseruurdnauta/)
 
 ## We used the Funda-Scraper package to scrape our data
 
-The query we used for the Funda-Scraper with below query on 28-03-2023.
+The query below was used to scrape our final research data on
+(28-03-2023).
 
 ``` python
-scraper = FundaScraper(area="provincie-noord-holland", want_to="buy", find_past=False, n_pages = 1000)
+scraper = FundaScraper(area="provincie-noord-holland", want_to="buy", find_past=False,\
+n_pages = 1000)
 df = scraper.run()
 ```
 
@@ -36,13 +45,16 @@ Additional spatial data includes:
 ### OLS on scraped data
 
 ``` r
-model <- lm(price~ room + bedroom + bathroom + living_area + house_age, data = funda_data)
+model <- lm(price ~ room + bedroom + bathroom + living_area +
+    house_age, data = funda_data)
 ```
 
 ### OLS on enriched data
 
 ``` r
-model <- lm(price~ room + bedroom + bathroom + living_area + house_age + bus_dist +subway_dist + train_dist + university_dist + school_dist + mall_dist + supermarket_dist, data = funda_data)
+model <- lm(price ~ room + bedroom + bathroom + living_area +
+    house_age + bus_dist + subway_dist + train_dist + university_dist +
+    school_dist + mall_dist + supermarket_dist, data = funda_data)
 ```
 
 ### GWR model to adjust for spatial component in the data

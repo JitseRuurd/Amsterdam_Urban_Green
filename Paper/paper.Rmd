@@ -1,0 +1,79 @@
+---
+title: "Explaining Noord-Holland house prices"
+author: 
+  - Yúri Grings
+  - Thomas Nibbering
+  - Jitse Ruurd Nauta
+date: "2023-03-21"
+
+output: 
+    pdf_document:
+        latex_engine: xelatex
+mainfont: Cambria
+classoption:
+- twocolumn
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=30),tidy=TRUE)
+
+```
+
+# 1. Abstract
+In an effort to create a green and diversified energy system, the Dutch national government aims to stimulate the adoption of renewables. In this context, wind energy is considered to be one of the most promising. However, the potential of this type of renewable is greatly influenced by existing land-use claims and related spatial and social policies. It becomes clear that, shifting to wind energy as a renewable energy source is a key challenge in densely populated countries, such as the Netherlands. Therefore, this study aims to examine the energy potential of suitable onshore wind farm sites in the province of North-Holland. In order to identify suitable areas for the placement of wind turbines, several spatial and social criteria and constraints were considered in three scenarios using a multi-criteria decision analysis method. Based on a power density function, the total energy potential of the suitable areas was determined. The results of the scenarios ranged from 2 MW to 3017 MW of prospective energy generable. These large ranges of potential show the significant impact of constraints and criteria and underline the need for a comprehensive understanding of the relationship between site suitability and spatial policies and choices.
+
+# 2. Introduction
+One of the aims of the Dutch national government is to stimulate renewables in order to create a green and diversified energy system [1]. Among the several alternatives available, wind energy is considered to be one of the most promising due to its limited environmental impact and economic viability [2]. Despite the advantages, wind energy still plays a marginal role in the total Dutch energy consumption [3]. While various reasons can be identified, this small share mainly relates to the fact that wind energy has to compete with other spatial claims that may be deemed more important. 
+
+Under the current legal framework, provinces are largely responsible for shaping spatial and energy plans [4]. However, the allocation for this type of renewable poses significant challenges. Apart from technical and physical incompatibility that influences the onshore location of wind farms, societal and environmental considerations are similarly important. Nature and other valuable landscapes often have a protected status, limiting or at least constraining the allocation of wind farms [5]. Moreover, societal resistance to environmental impact experienced by those near wind turbines also inspire spatial energy policies and choices [6]. As a result, the transition to onshore wind turbines as a source of renewable energy represents a key challenge in a country that is as densely populated as the Netherlands. 
+
+A review of literature revealed that there is a multitude of studies that aimed to identify the spatial potential for wind energy deployment. Often studies applied geospatial information systems in combination with a multi-criteria decision analysis to examine the suitability of sites [2, 7]. Here, areas of interest were evaluated based on a variety of criteria and constraints. In general, these studies employed a rule-based approach considering mostly physical [8], economic [9, 10] and environmental [2] aspects with only a few placing emphasis on social considerations [11, 12]. Moreover, the literature revealed that studies using a scenario-based approach were limited, especially in the Netherlands [13]. As a result, a comprehensive understanding of the relationship between site suitability for wind farms and multiple spatial policies and choices remain underdeveloped.  
+
+In an effort to examine the energy potential of sites suitable for the production of wind energy, mathematical functions are the main tools used in literature [14]. Among the several types available, wind power density is most commonly employed [15–17]. Although several studies have proven its limitations in wind energy assessment due to its flexibility and simplicity, the method is widely accepted and can be considered almost a standard approach [18, 19]. 
+
+Based on the examined literature, multi-criteria decision analysis in combination with a wind power density function emerges as an effective tool for assessing the energy potential of sites suitable for the production of wind energy. Given the limited literature available on wind farm allocation in the Netherlands and the evident challenges associated with balancing elements of interest, this study aims to provide a preliminary overview of the energy potential of suitable onshore wind farm sites in the province of North-Holland. 
+
+# 3. Methods
+## 3.1 Study Area
+In this study, the geographical scope was limited to the province of North-Holland, as presented in Figure 1. The area is situated in the North-Western part of the Netherlands and occupies an onshore space of 2,840 km2 [5]. The province is home to almost 2,8 million inhabitants, making it one of the most densely populated regions in the country (684 inhabitants/km2) [20]. Outside the large urban areas, the vast majority of the land is agricultural with two areas designated as National Parks [20, 21]. At the moment, the province is obligated by the Dutch national government to have an extra installed onshore wind capacity of 105.5 MW [4, 5]. 
+
+```{r include=FALSE}
+library(mapview)
+library(tidyverse)
+library(tmap)
+library(sf)
+setwd("./..")
+funda_data <- st_read("data/funda_buy_28-03-2023_full_distances.gpkg")
+setwd("Paper")
+```
+
+Plot klein 
+
+```{r test1, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Figure number, Plot of NH"}
+tm_shape(funda_data) +
+  tm_dots()
+```
+
+
+
+
+\onecolumn
+of plot groot
+
+```{r test2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Figure number, Plot of NH"}
+tm_shape(funda_data) +
+  tm_dots()
+```
+
+Bron vermelding zo:
+@fotheringham2017multiscale
+
+Of zo:
+[-@fotheringham2017multiscale]
+
+
+# References
+
+<div id="refs"></div>
