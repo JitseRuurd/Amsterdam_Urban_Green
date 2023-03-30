@@ -28,8 +28,8 @@ OSM was used to enrich the scraped data. We geocode adressess into
 geometries objects for in order to make use of the geospatial models.
 Additional spatial data includes:
 
-*Distance to public transport (Bus, Subway, and Train) *Distance to
-public services (Schools, Universities, Shopping centres)
+- Distance to public transport (Bus, Subway, and Train)
+- Distance to public services (Schools, Universities, Shopping centres)
 
 ## This enriched data is used to fit an OLS model
 
