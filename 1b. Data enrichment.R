@@ -1,5 +1,4 @@
-easypackages::packages("sf", "sp", "osmdata", "FNN")
-library(dplyr)
+easypackages::packages("sf", "sp", "osmdata", "FNN", "tidyverse")
 
 #read_sf("data/Noord_holland_polygon.shp") %>%
 # st_transform(crs=4326) %>%
