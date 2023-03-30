@@ -67,11 +67,9 @@ summary(sac_model, Nagelkerke=T)
 gwr_result<- st_read("data/gwr_results_full.gpkg")
 
 
-bus <- mapview(gwr_result, zcol = "university_dist", col.regions=brewer.pal(9, "YlOrRd"))
-train <- mapview(gwr_result, zcol = "train_dist", col.regions=brewer.pal(9, "YlOrRd"))
-subway <- mapview(gwr_result, zcol = "subway_dist", col.regions=brewer.pal(9, "YlOrRd"))
+map <- mapview(gwr_result, zcol = "living_area_TV", col.regions=brewer.pal(9, "YlOrRd"))
 
-bus
+map
 
 gwr_result %>% 
   ggplot(aes(x = residual)) + geom_density()
