@@ -1,4 +1,4 @@
-easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg")
+easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync")
 
 #load data
 funda_data <- st_read("data/funda_buy_28-03-2023_full_distances.gpkg")
@@ -52,6 +52,29 @@ summary(sac_model, Nagelkerke=T)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+gwr_result<- st_read("data/gwr_results_full.gpkg")
+
+
+bus <- mapview(gwr_result, zcol = "university_dist", col.regions=brewer.pal(9, "YlOrRd"))
+train <- mapview(gwr_result, zcol = "train_dist", col.regions=brewer.pal(9, "YlOrRd"))
+subway <- mapview(gwr_result, zcol = "subway_dist", col.regions=brewer.pal(9, "YlOrRd"))
+
+bus
+
+gwr_result %>% 
+  ggplot(aes(x = residual)) + geom_density()
 
 
 ########### KNOEIEN
