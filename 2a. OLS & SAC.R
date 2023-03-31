@@ -49,27 +49,6 @@ sac_model = sacsarlm(equation, data = funda_data, listw= funda_KNN_w, zero.polic
 summary(sac_model, Nagelkerke=T)
 
 
-#Visualize results GWR model
-gwr_result<- st_read("data/gwr_results_amsterdam.gpkg")
-
-gwr_result %>% 
-  filter(living_area_TV < -1.96| living_area_TV > 1.96) %>% 
-  mapview( zcol = "living_area", col.regions=brewer.pal(9, "YlOrRd"))
-  
-
-map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
-
-map
-
-gwr_result %>% 
-  ggplot(aes(x = residual)) + geom_density()
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,27 @@
+easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap")
+
+
+#Visualize results GWR model
+gwr_result<- st_read("data/gwr_results_full.gpkg")
+
+gwr_result %>% 
+  #filter(train_dist_TV < -1.96| train_dist_TV > 1.96) %>% 
+  mapview( zcol = "residual", col.regions=brewer.pal(9, "YlOrRd"))
+
+
+map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
+
+map
+
+gwr_result %>% 
+  ggplot(aes(x = residual)) + geom_density()
+
+funda_data <- st_read("data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
+
+tm_shape(PC4)+
+  tm_polygons()+
+  tm_shape(gwr_result)+
+  tm_dots(c("train_dist")) + 
+  tm_layout(legend.position = c("right", "top"), 
+            legend.text.size = 0.5, legend.title.size = 0.8)
