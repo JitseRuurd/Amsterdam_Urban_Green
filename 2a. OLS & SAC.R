@@ -1,23 +1,22 @@
 easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync")
 
 #load data
-funda_data <- st_read("data/funda_buy_28-03-2023_full_distances.gpkg")
-nh_shape <- st_transform(st_read("data/Noord_Holland.gpkg"), crs = 28992)
+funda_data <- st_read("data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 #funda_data <- funda_data %>% filter(price <1000000)
 
 #plot dependent variable
-mapview(funda_data, zcol = "price_log", col.regions=brewer.pal(9, "YlOrRd"))
+mapview(funda_data, zcol = "price", col.regions=brewer.pal(9, "YlOrRd"))
 
-tm_shape(nh_shape) + 
-  tm_polygons() + 
-  tm_shape(funda_data) +
-  tm_dots(col = "price", breaks = c(0,100000,250000,500000,1000000,2500000,10000000)) + 
+tm_shape(PC4)+
+  tm_polygons()+
+tm_shape(funda_data)+
+  tm_dots(c("price"), style = "log10_pretty") + 
   tm_layout(legend.position = c("right", "top"), 
-            legend.text.size = 0.5, legend.title.size = 0.8,
-            legend.outside = T)
+            legend.text.size = 0.5, legend.title.size = 0.8)
 
 #test global spatial autocorrelation with Moran's I
-funda_KNN <- knearneigh(funda_data, k=10) #Identify k nearest neighbours for spatial weights 
+funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
 funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
 funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
 mc_global_knn <- moran.mc(funda_data$price, funda_KNN_w, 2999, alternative="greater")
@@ -25,9 +24,7 @@ plot(mc_global_knn)
 mc_global_knn
 #there is significant spatial autocorrelation
 
-equation <- price ~ room + bedroom + bathroom + living_area + house_age + bus_dist + subway_dist + 
-  train_dist + university_dist + school_dist + mall_dist + supermarket_dist #+ house_type +
-  #building_type + energy_label + has_balcony + has_garden
+equation <- price ~ room + bedroom + bathroom + living_area + house_age + tram_dist + metro_dist
 #OLS
 model <- lm(equation, 
             data = funda_data)
@@ -39,9 +36,11 @@ par(mfrow=c(2,2))
 plot(model)
 #test spatial autocorrelation in residuals
 mc_global_OLS <- moran.mc(model$residuals, funda_KNN_w, 2999, zero.policy= TRUE, alternative="greater")
-#plot the  Moran’s I
+#plot the  Moranâs I
 plot(mc_global_OLS)
 mc_global_OLS
+
+funda_data$res_lm <- model$residuals
 #Now plot the residuals
 mapview(funda_data, zcol = "res_lm", col.regions=brewer.pal(9, "YlOrRd"))
 
@@ -63,9 +62,7 @@ summary(sac_model, Nagelkerke=T)
 
 
 
-gwr_result %>%
-  filter(university_dist_TV < -1.99 | university_dist_TV > 1.99) %>%
-  mapview(zcol = 'university_dist', col.regions=brewer.pal(9, "YlOrRd"))
+
 
 
 
@@ -73,12 +70,12 @@ gwr_result %>%
 gwr_result<- st_read("data/gwr_results_full.gpkg")
 
 
-map <- mapview(gwr_result, zcol = "bus_dist", col.regions=brewer.pal(9, "YlOrRd"))
+map <- mapview(gwr_result, zcol = "house_age", col.regions=brewer.pal(9, "YlOrRd"))
 
 map
 
 gwr_result %>% 
-  ggplot(aes(x = residual)) + geom_density() + scale_x_log10()
+  ggplot(aes(x = residual)) + geom_density()
 
 
 ########### KNOEIEN
@@ -92,7 +89,7 @@ funda_data$price_LISA_p <- funda_price_LISA[,5]
 
 #Here we can map the local Moran's I with t-map, and show which areas have significant clusters
 map_LISA <- tm_shape(funda_data) + 
-  tm_dots(col= "price_LISA", title= "Local Moran’s I", midpoint=0,
+  tm_dots(col= "price_LISA", title= "Local Moranâs I", midpoint=0,
           palette = "RdYlBu", breaks= c(-10, -5, 0, 5, 10, 20)) 
 map_LISA_p <- tm_shape(funda_data) + 
   tm_dots(col= "price_LISA_p", title= "p-values",
