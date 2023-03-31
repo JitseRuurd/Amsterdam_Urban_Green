@@ -36,7 +36,7 @@ par(mfrow=c(2,2))
 plot(model)
 #test spatial autocorrelation in residuals
 mc_global_OLS <- moran.mc(model$residuals, funda_KNN_w, 2999, zero.policy= TRUE, alternative="greater")
-#plot the  Moranâs I
+#plot the  Moran's I
 plot(mc_global_OLS)
 mc_global_OLS
 
@@ -49,24 +49,7 @@ sac_model = sacsarlm(equation, data = funda_data, listw= funda_KNN_w, zero.polic
 summary(sac_model, Nagelkerke=T)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Visualize results GWR model
 gwr_result<- st_read("data/gwr_results_amsterdam.gpkg")
 
 gwr_result %>% 
@@ -82,7 +65,15 @@ gwr_result %>%
   ggplot(aes(x = residual)) + geom_density()
 
 
-########### KNOEIEN
+
+
+
+
+
+
+
+
+########################################################### KNOEIEN ########################################################### 
 #test local spatial autocorrelation with Moran's I
 funda_price_LISA <- localmoran(funda_data$price, funda_KNN_w) 
 # to visualize this statistic the relevant information needs to be extracted
@@ -93,7 +84,7 @@ funda_data$price_LISA_p <- funda_price_LISA[,5]
 
 #Here we can map the local Moran's I with t-map, and show which areas have significant clusters
 map_LISA <- tm_shape(funda_data) + 
-  tm_dots(col= "price_LISA", title= "Local Moranâs I", midpoint=0,
+  tm_dots(col= "price_LISA", title= "Local Moran's I", midpoint=0,
           palette = "RdYlBu", breaks= c(-10, -5, 0, 5, 10, 20)) 
 map_LISA_p <- tm_shape(funda_data) + 
   tm_dots(col= "price_LISA_p", title= "p-values",
