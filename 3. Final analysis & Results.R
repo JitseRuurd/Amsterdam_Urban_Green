@@ -2,11 +2,11 @@ easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap")
 
 
 #Visualize results GWR model
-gwr_result<- st_read("data/gwr_results_full.gpkg")
+gwr_result<- st_read("data/mgwr_results_amsterdam.gpkg")
 
 gwr_result %>% 
-  #filter(train_dist_TV < -1.96| train_dist_TV > 1.96) %>% 
-  mapview( zcol = "residual", col.regions=brewer.pal(9, "YlOrRd"))
+  filter(tram_dist_TV < -1.96| tram_dist_TV > 1.96) %>% 
+  mapview( zcol = "tram_dist", col.regions=brewer.pal(9, "YlOrRd"))
 
 
 map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
