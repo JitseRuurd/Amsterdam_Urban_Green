@@ -8,9 +8,9 @@ desination_path <-  "data/"
 
 #below names need to be specified
 
-orgin_df_name <- "SPECIFY_THIS.csv"
-desination_df_name <- "SPECIFY_THIS.csv"
-desination_gpkg_name <- "SPECIFY_THIS.gpkg"
+orgin_df_name <- "funda_buy_amsterdam_31-03-2023_full.csv"
+desination_df_name <- "funda_buy_amsterdam_31-03-2023_fulllatlon.csv"
+desination_gpkg_name <- "funda_buy_amsterdam_31-03-2023_full.gpkg"
 
 #load raw scraped Funda data from the folder
 
@@ -30,16 +30,16 @@ str(df)
 #geocode the addres line with OSM to lat long columns
 
 df_geo <- df %>% 
-  separate(address_line, c("zip", "letters", "city", "optional1","optional2", "optional3", "optional4"), " ") %>% 
+  separate(address_line, c("zip", "letters", "city", "optional1","optional2", "optional3", "optional4", "optional5"), " ") %>% 
   mutate(addressline_city = paste(city, optional1, optional2, optional3, optional4, optional5),
          addressline_zip = paste(zip, letters),
-         addresszip = paste0(address, ", ",addressline_zip, ", ", city, ", Nederland")) %>% 
+         addresszip = paste0(address, ", ",addressline_zip, ", ", addressline_city)) %>% 
   select(-optional1, -optional2, -optional3, -optional4, -optional5) %>% 
   geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
 
 #wire to csv
 write.csv(df_geo, paste0(desination_path, desination_df_name))
-df_geo <- read_csv("data/funda_buy_28-03-2023_full_latlon.csv")
+
 #write to geopackage 
 
 #NAs will be dropped and the data will be clipped to Noord-Holland to delete any falsely geocoded locations.
@@ -51,12 +51,14 @@ df_spatial = st_as_sf(df_geo_clean, coords = c( "longitude", "latitude"), crs = 
 df_spatial <- st_transform(df_spatial, crs = 28992)
 
 #clip data bases on NH boundary
-df_spatial_clipped <- st_intersection(df_spatial, st_transform(st_read("data/Noord_Holland.gpkg"), crs = 28992))
+df_spatial_clipped <- st_intersection(df_spatial, st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992))
 
 #view data
 mapview(df_spatial_clipped)
 
 #write to geopackage
 st_write(df_spatial_clipped,paste0(desination_path, desination_gpkg_name))
+
+
 
 
