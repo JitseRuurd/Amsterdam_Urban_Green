@@ -2,18 +2,22 @@ easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "ca
 
 #load data
 funda_data <- st_read("data/funda_buy_28-03-2023_full_distances.gpkg")
+nh_shape <- st_transform(st_read("data/Noord_Holland.gpkg"), crs = 28992)
 #funda_data <- funda_data %>% filter(price <1000000)
 
 #plot dependent variable
-mapview(funda_data, zcol = "price", col.regions=brewer.pal(9, "YlOrRd"))
+mapview(funda_data, zcol = "price_log", col.regions=brewer.pal(9, "YlOrRd"))
 
-tm_shape(funda_data) +
-  tm_dots(c("price", "living_area")) + 
+tm_shape(nh_shape) + 
+  tm_polygons() + 
+  tm_shape(funda_data) +
+  tm_dots(col = "price", breaks = c(0,100000,250000,500000,1000000,2500000,10000000)) + 
   tm_layout(legend.position = c("right", "top"), 
-            legend.text.size = 0.5, legend.title.size = 0.8)
+            legend.text.size = 0.5, legend.title.size = 0.8,
+            legend.outside = T)
 
 #test global spatial autocorrelation with Moran's I
-funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
+funda_KNN <- knearneigh(funda_data, k=10) #Identify k nearest neighbours for spatial weights 
 funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
 funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
 mc_global_knn <- moran.mc(funda_data$price, funda_KNN_w, 2999, alternative="greater")
@@ -22,8 +26,8 @@ mc_global_knn
 #there is significant spatial autocorrelation
 
 equation <- price ~ room + bedroom + bathroom + living_area + house_age + bus_dist + subway_dist + 
-  train_dist + university_dist + school_dist + mall_dist + supermarket_dist + house_type +
-  building_type + energy_label + has_balcony + has_garden
+  train_dist + university_dist + school_dist + mall_dist + supermarket_dist #+ house_type +
+  #building_type + energy_label + has_balcony + has_garden
 #OLS
 model <- lm(equation, 
             data = funda_data)
@@ -59,7 +63,9 @@ summary(sac_model, Nagelkerke=T)
 
 
 
-
+gwr_result %>%
+  filter(university_dist_TV < -1.99 | university_dist_TV > 1.99) %>%
+  mapview(zcol = 'university_dist', col.regions=brewer.pal(9, "YlOrRd"))
 
 
 
@@ -67,12 +73,12 @@ summary(sac_model, Nagelkerke=T)
 gwr_result<- st_read("data/gwr_results_full.gpkg")
 
 
-map <- mapview(gwr_result, zcol = "house_age", col.regions=brewer.pal(9, "YlOrRd"))
+map <- mapview(gwr_result, zcol = "bus_dist", col.regions=brewer.pal(9, "YlOrRd"))
 
 map
 
 gwr_result %>% 
-  ggplot(aes(x = residual)) + geom_density()
+  ggplot(aes(x = residual)) + geom_density() + scale_x_log10()
 
 
 ########### KNOEIEN
