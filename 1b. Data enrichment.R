@@ -107,3 +107,35 @@ funda_data <- funda_data %>%
 
 #write results to updated gpkg
 st_write(funda_data, "data/funda_buy_28-03-2023_full_distances.gpkg")
+
+
+##### Amsterdam
+nn_function <- function(measureFrom,measureTo,k) {
+  measureFrom_Matrix <- as.matrix(measureFrom)
+  measureTo_Matrix <- as.matrix(measureTo)
+  nn <-   
+    get.knnx(measureTo, measureFrom, k)$nn.dist [,k]
+  return(nn)
+}
+amsterdam_boundaries <- st_transform(st_read("data/Amsterdam/PC4.json"), crs= 28992)
+
+amsterdam_network <- st_transform(st_read("data/Amsterdam/streets.json"), crs= 28992)
+public_transport <- st_transform(st_read("data/Amsterdam/public_transport.json"), crs= 28992)
+
+tram <- public_transport %>% 
+  filter(Modaliteit == "Tram")
+metro <- public_transport %>% 
+  filter(Modaliteit == "Metro")
+
+
+funda_data <- st_read ("data/funda_buy_amsterdam_31-03-2023_full.gpkg")
+
+funda_data <- funda_data %>%
+  mutate(tram_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(tram$geometry), 1))
+
+funda_data <- funda_data %>%
+  mutate(metro_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(metro$geometry), 1))
+
+
+#write results to updated gpkg
+st_write(funda_data, "data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
