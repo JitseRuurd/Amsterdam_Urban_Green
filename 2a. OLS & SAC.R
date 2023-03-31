@@ -67,10 +67,14 @@ summary(sac_model, Nagelkerke=T)
 
 
 
-gwr_result<- st_read("data/gwr_results_full.gpkg")
+gwr_result<- st_read("data/gwr_results_amsterdam.gpkg")
 
+gwr_result %>% 
+  filter(living_area_TV < -1.96| living_area_TV > 1.96) %>% 
+  mapview( zcol = "living_area", col.regions=brewer.pal(9, "YlOrRd"))
+  
 
-map <- mapview(gwr_result, zcol = "house_age", col.regions=brewer.pal(9, "YlOrRd"))
+map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
 
 map
 

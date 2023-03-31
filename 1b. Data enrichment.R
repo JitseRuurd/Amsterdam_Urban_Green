@@ -8,6 +8,7 @@ easypackages::packages("sf", "sp", "osmdata", "FNN", "tidyverse")
 
 province_boundaries <- st_read ("data/Noord_Holland.gpkg")
 funda_data <- st_read ("data/funda_buy_28-03-2023_full.gpkg")
+trein <- st_transform(st_read("data/Amsterdam/Stations_(NS).geojson"), crs= 28992)
 
 # Get OSM data
 bus <-  opq(st_bbox(province_boundaries)) %>%
@@ -20,12 +21,6 @@ subway <-  opq(st_bbox(province_boundaries)) %>%
   add_osm_feature(key = "railway", c("subway_entrance")) %>%
   osmdata_sf ()
 subway_points <- st_as_sf (subway$osm_points) %>% dplyr:: select(osm_id)
-
-
-train <-  opq(st_bbox(province_boundaries)) %>%
-  add_osm_feature(key = "building", c("train_station")) %>%
-  osmdata_sf ()
-train_points <- st_as_sf (train$osm_points) %>% dplyr:: select(osm_id, amenity)
 
 university <-  opq(st_bbox(province_boundaries)) %>%
   add_osm_feature(key = "amenity", c("university")) %>%
@@ -83,7 +78,7 @@ funda_data <- funda_data %>%
 
 #distance to train station
 funda_data <- funda_data %>%
-  mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(train_points$geom), 1))
+  mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(trein$geometry), 1))
 
 #distance to university
 funda_data <- funda_data %>%
@@ -122,6 +117,11 @@ amsterdam_boundaries <- st_transform(st_read("data/Amsterdam/PC4.json"), crs= 28
 amsterdam_network <- st_transform(st_read("data/Amsterdam/streets.json"), crs= 28992)
 public_transport <- st_transform(st_read("data/Amsterdam/public_transport.json"), crs= 28992)
 
+trein <- st_transform(st_read("data/Amsterdam/Stations_(NS).geojson"), crs= 28992)
+
+
+
+
 tram <- public_transport %>% 
   filter(Modaliteit == "Tram")
 metro <- public_transport %>% 
@@ -136,6 +136,11 @@ funda_data <- funda_data %>%
 funda_data <- funda_data %>%
   mutate(metro_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(metro$geometry), 1))
 
+funda_data <- funda_data %>%
+  mutate(metro_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(metro$geometry), 1))
+
+funda_data <- funda_data %>%
+  mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(trein$geometry), 1))
 
 #write results to updated gpkg
 st_write(funda_data, "data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
