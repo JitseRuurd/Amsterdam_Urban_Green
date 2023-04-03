@@ -8,6 +8,19 @@ gwr_result %>%
   filter(tram_dist_TV < -1.96| tram_dist_TV > 1.96) %>% 
   mapview( zcol = "tram_dist", col.regions=brewer.pal(9, "YlOrRd"))
 
+gwr_result %>% 
+  filter(train_dist_TV < -1.96| train_dist_TV > 1.96) %>% 
+  mapview( zcol = "train_dist", col.regions=brewer.pal(9, "YlOrRd"))
+
+gwr_result %>% 
+  filter(metro_dist_TV < -1.96| metro_dist_TV > 1.96) %>% 
+  mapview( zcol = "metro_dist", col.regions=brewer.pal(9, "YlOrRd"))
+
+gwr_result %>% 
+  filter(living_area_TV < -1.96| living_area_TV > 1.96) %>% 
+  mapview( zcol = "living_area", col.regions=brewer.pal(9, "YlOrRd"))
+
+
 
 map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
 
