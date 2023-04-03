@@ -2,7 +2,7 @@ easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap")
 
 
 #Visualize results GWR model
-gwr_result<- st_read("data/mgwr_results_amsterdam.gpkg")
+gwr_result<- st_read("data/models/gwr_results_amsterdam.gpkg")
 
 gwr_result %>% 
   filter(tram_dist_TV < -1.96| tram_dist_TV > 1.96) %>% 
@@ -19,6 +19,11 @@ gwr_result %>%
 gwr_result %>% 
   filter(living_area_TV < -1.96| living_area_TV > 1.96) %>% 
   mapview( zcol = "living_area", col.regions=brewer.pal(9, "YlOrRd"))
+
+gwr_result %>% 
+  filter(ndvi300_TV < -1.96| ndvi300_TV > 1.96) %>% 
+  mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
+
 
 
 

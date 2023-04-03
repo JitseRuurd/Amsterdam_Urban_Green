@@ -4,7 +4,7 @@
 easypackages::packages("raster", "sf", "tidyverse", "tidygeocoder", "mapview")
 #paths
 origin_path <- "Scraper/data/"
-desination_path <-  "data/"
+desination_path <-  "data/Houseprices"
 
 #below names need to be specified
 
