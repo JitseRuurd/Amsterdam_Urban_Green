@@ -105,9 +105,9 @@ st_write(funda_data, "data/funda_buy_28-03-2023_full_distances.gpkg")
 
 ############################################################ AMSTERDAM ###########################################################
 ############################################################ DATA ###########################################################
-funda_data <- st_read ("data/funda_buy_amsterdam_31-03-2023_full.gpkg")
+funda_data <- st_transform(st_read("data/funda_buy_amsterdam_31-03-2023_full.gpkg"), crs = 28992)
 amsterdam_boundaries <- st_transform(st_read("data/Amsterdam/PC4.json"), crs= 28992)
-amsterdam_network <- st_transform(st_read("data/Amsterdam/streets.json"), crs= 28992)
+
 public_transport <- st_transform(st_read("data/Amsterdam/public_transport.json"), crs= 28992)
 tram <- public_transport %>% 
   filter(Modaliteit == "Tram")
@@ -135,5 +135,60 @@ funda_data <- funda_data %>%
 funda_data <- funda_data %>%
   mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(train$geometry), 1))
 
+
+
+
+
 #write results to updated gpkg
 st_write(funda_data, "data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+
+
+############################################################ Network ######################################################
+
+easypackages::packages("sfnetworks", "tidygraph")
+
+amsterdam_network <- as_sfnetwork(st_transform(st_read("data/Amsterdam/streets.json"), crs= 28992))
+plot(amsterdam_network)
+
+facilities <- tram %>% st_geometry()
+sites <- funda_data %>% st_geometry() 
+
+net <- amsterdam_network %>%
+  activate("edges") %>%
+  mutate(weight = edge_length())
+
+plot(net)
+
+new_net = net %>%
+  activate("nodes") %>%
+  filter(group_components() == 1) %>%
+  st_network_blend(c(sites, facilities))
+
+
+plot(blended)
+
+cost_matrix = st_network_cost(new_net, from = snapped_sites %>% st_geometry(), to = snapped_facilities %>% st_geometry(), weights = "weight")
+
+facilities <- tram %>% st_geometry() 
+
+closest = facilities[apply(cost_matrix, 1, function(x) which(x == min(x))[1])]
+
+
+draw_lines = function(sources, targets) {
+  lines = mapply(
+    function(a, b) st_sfc(st_cast(c(a, b), "LINESTRING"), crs = st_crs(net)),
+    sources,
+    targets,
+    SIMPLIFY = FALSE
+  )
+  do.call("c", lines)
+}
+
+connections = draw_lines(sites %>% st_geometry(), closest)
+
+# Plot the results.
+plot(new_net, col = "grey")
+plot(connections, lwd = 2, add = TRUE)
+plot(facilities, pch = 8, cex = 2, lwd = 2, add = TRUE)
+plot(sites, pch = 20, cex = 2, add = TRUE)
+
