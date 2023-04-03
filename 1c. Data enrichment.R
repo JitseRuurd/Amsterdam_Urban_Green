@@ -1,4 +1,4 @@
-easypackages::packages("sf", "sp", "osmdata", "FNN", "tidyverse", "stars")
+easypackages::packages("sf", "sp", "osmdata", "FNN", "tidyverse", "stars", "mapview")
 
 ############################################################ AMSTERDAM ###########################################################
 ############################################################ DATA ###########################################################
@@ -48,8 +48,16 @@ funda_data$ndvi100 <- ndvi100$NDVI_Amsterdam_100m.tif
 funda_data$ndvi300 <- ndvi300$NDVI_Amsterdam_300m.tif
 funda_data$ndvi500 <- ndvi500$NDVI_Amsterdam_500m.tif
 
+funda_data %>% 
+  mapview( zcol = "ndvi500", col.regions=brewer.pal(9, "YlOrRd"))
+
+
+
+
 #write results to updated gpkg
 st_write(funda_data, "data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+
+
 
 
 #read_sf("data/Noord_holland_polygon.shp") %>%
