@@ -135,12 +135,27 @@ funda_data <- funda_data %>%
 funda_data <- funda_data %>%
   mutate(train_dist = nn_function(st_coordinates(funda_data$geom), st_coordinates(train$geometry), 1))
 
+############################################################ NDVI ######################################################
+
+raster <- 
+
+
+terra::extract(raster, points)
 
 
 
 
 #write results to updated gpkg
 st_write(funda_data, "data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+
+
+
+
+
+
+
+
+
 
 
 ############################################################ Network ######################################################
