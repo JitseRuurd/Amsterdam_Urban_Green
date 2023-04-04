@@ -10,11 +10,33 @@ bbox_new <- st_bbox(PC4) # current bounding box
 xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
 yrange <- bbox_new$ymax - bbox_new$ymin # range of y values 
 # bbox_new[1] <- bbox_new[1] - (0.25 * xrange) # xmin - left 
-bbox_new[3] <- bbox_new[3] + (0.35 * xrange) # xmax - right 
+bbox_new[3] <- bbox_new[3] + (0.25 * xrange) # xmax - right 
 # bbox_new[2] <- bbox_new[2] - (0.25 * yrange) # ymin - bottom 
 bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
 bbox_new <- bbox_new %>% # take the bounding box ... 
   st_as_sfc() # ... and make it a sf polygon # looks better, does it? 
+
+library(stars)
+ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_100m.tif")
+
+
+tm_shape(ndvi, bbox = bbox_new)+
+  tm_raster() +
+  tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white", alpha = 0)+
+  tm_shape(funda_data)+
+  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,1000,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
+  tm_layout(title = "Amsterdam house prices",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
+
+
+
 
 tm_shape(PC4, bbox = bbox_new)+
   tm_polygons(col = "white")+

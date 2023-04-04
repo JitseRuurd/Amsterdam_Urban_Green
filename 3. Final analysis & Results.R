@@ -2,11 +2,11 @@ easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "sp
 
 
 #Visualize results GWR model
-gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi_m2.gpkg")
+gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi300_m2.gpkg")
 funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
 
 funda_data %>% 
-  mapview( zcol = "price_m2", col.regions=brewer.pal(9, "YlOrRd"), at = seq(4000, 25000, 1000))
+  mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
 
 gwr_result %>% 
   filter(tram_dist_TV < -1.96| tram_dist_TV > 1.96) %>% 
@@ -22,8 +22,8 @@ gwr_result %>%
 
 
 gwr_result %>% 
-  filter(ndvi500_TV < -1.91| ndvi500_TV > 1.91) %>% 
-  mapview( zcol = "ndvi500", col.regions=brewer.pal(9, "YlOrRd"))
+  filter(ndvi300_TV < -1.91| ndvi300_TV > 1.91) %>% 
+  mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
 
 
 
@@ -47,7 +47,7 @@ gwr_result %>%
   mapview( zcol = "residual", col.regions=brewer.pal(9, "YlOrRd"))
 
 
-funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
+funda_KNN <- knearneigh(funda_data, k=50) #Identify k nearest neighbours for spatial weights 
 funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
 funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
 
