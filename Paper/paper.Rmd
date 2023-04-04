@@ -27,7 +27,8 @@ library(tidyverse)
 library(tmap)
 library(sf)
 setwd("./..")
-funda_data <- st_read("data/funda_buy_28-03-2023_full_distances.gpkg")
+funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 setwd("Paper")
 ```
 
@@ -68,9 +69,31 @@ In this study, the geographical scope was limited to the province of North-Holla
 
 Plot klein 
 
-```{r test1, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Figure number, Plot of NH"}
-tm_shape(funda_data) +
-  tm_dots()
+```{r test1, echo=FALSE, fig.cap="Figure number", message=FALSE, warning=FALSE}
+#plot dependent variable
+# make some bbox magic 
+bbox_new <- st_bbox(PC4) # current bounding box 
+xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
+yrange <- bbox_new$ymax - bbox_new$ymin # range of y values 
+# bbox_new[1] <- bbox_new[1] - (0.25 * xrange) # xmin - left 
+bbox_new[3] <- bbox_new[3] + (0.35 * xrange) # xmax - right 
+# bbox_new[2] <- bbox_new[2] - (0.25 * yrange) # ymin - bottom 
+bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
+bbox_new <- bbox_new %>% # take the bounding box ... 
+  st_as_sfc() # ... and make it a sf polygon # looks better, does it? 
+
+tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white")+
+  tm_shape(funda_data)+
+  tm_dots(c("ndvi500"), title = "NDVI (500m range)", size = 0.1) + 
+  tm_layout(title = "Amsterdam NDVI values",
+            #title.fontfamily = "cambria",
+            title.fontface = "bold",
+            #legend.text.fontfamily = "cambria",
+            #legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
 
 ```
 

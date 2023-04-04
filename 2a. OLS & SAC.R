@@ -1,19 +1,46 @@
-easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync")
+easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync", "systemfonts")
 
 #load data
-funda_data <- st_read("data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
 PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
-#funda_data <- funda_data %>% filter(price <1000000)
 
 #plot dependent variable
-mapview(funda_data, zcol = "price", col.regions=brewer.pal(9, "YlOrRd"))
+# make some bbox magic 
+bbox_new <- st_bbox(PC4) # current bounding box 
+xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
+yrange <- bbox_new$ymax - bbox_new$ymin # range of y values 
+# bbox_new[1] <- bbox_new[1] - (0.25 * xrange) # xmin - left 
+bbox_new[3] <- bbox_new[3] + (0.35 * xrange) # xmax - right 
+# bbox_new[2] <- bbox_new[2] - (0.25 * yrange) # ymin - bottom 
+bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
+bbox_new <- bbox_new %>% # take the bounding box ... 
+  st_as_sfc() # ... and make it a sf polygon # looks better, does it? 
 
-tm_shape(PC4)+
-  tm_polygons()+
+tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white")+
 tm_shape(funda_data)+
-  tm_dots(c("price"), style = "log10_pretty") + 
-  tm_layout(legend.position = c("right", "top"), 
-            legend.text.size = 0.5, legend.title.size = 0.8)
+  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,1000,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
+  tm_layout(title = "Amsterdam house prices",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
+
+tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white")+
+  tm_shape(funda_data)+
+  tm_dots(c("ndvi500"), title = "NDVI (500m range)", size = 0.1) + 
+  tm_layout(title = "Amsterdam NDVI values",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
 
 #test global spatial autocorrelation with Moran's I
 funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
@@ -24,7 +51,7 @@ plot(mc_global_knn)
 mc_global_knn
 #there is significant spatial autocorrelation
 
-equation <- price ~ room + bedroom + bathroom + living_area + house_age + tram_dist + metro_dist
+equation <- price_m2 ~ bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi500 + centre_dist + zuid_dist + shops_dist + school_dist
 #OLS
 model <- lm(equation, 
             data = funda_data)
@@ -47,89 +74,17 @@ mapview(funda_data, zcol = "res_lm", col.regions=brewer.pal(9, "YlOrRd"))
 #SAC model
 sac_model = sacsarlm(equation, data = funda_data, listw= funda_KNN_w, zero.policy = TRUE)
 summary(sac_model, Nagelkerke=T)
+#check residual autocorrelation
+mc2_global_sac <-moran.mc(sac_model$residuals, funda_KNN_w, 2999, alternative="greater")
+plot(mc2_global_sac)
+mc2_global_sac
+#No more spatial autocorrelation
 
-
-
-
-
-########################################################### KNOEIEN ########################################################### 
-#test local spatial autocorrelation with Moran's I
-funda_price_LISA <- localmoran(funda_data$price, funda_KNN_w) 
-# to visualize this statistic the relevant information needs to be extracted
-# extract local Moran's I values and attach them to sf object 
-funda_data$price_LISA <- funda_price_LISA[,1] 
-# extract p-values
-funda_data$price_LISA_p <- funda_price_LISA[,5] 
-
-#Here we can map the local Moran's I with t-map, and show which areas have significant clusters
-map_LISA <- tm_shape(funda_data) + 
-  tm_dots(col= "price_LISA", title= "Local Moran's I", midpoint=0,
-          palette = "RdYlBu", breaks= c(-10, -5, 0, 5, 10, 20)) 
-map_LISA_p <- tm_shape(funda_data) + 
-  tm_dots(col= "price_LISA_p", title= "p-values",
-          breaks= c(0, 0.01, 0.05, 1), palette = "Reds") 
-tmap_arrange(map_LISA, map_LISA_p)
-
-
-### PC4 test
-
-PC4 <- st_transform(st_read("data/Postcodevlakken_PC_4/PC4.shp"), crs= 28992)
-Noord_Holland <- st_transform(st_read("data/Noord_Holland.gpkg"), crs= 28992)
-
-
-NH_PC4 <- st_intersection(PC4, Noord_Holland)
-
-mapview(NH_PC4, zcol = "PC4", col.regions=brewer.pal(9, "YlOrRd"))
-
-Mode <- function(x) {
-  ux <- unique(x) 
-  ux[which.max(tabulate(match(x, ux)))]} 
-
-funda_agg <- funda_data %>% 
-  mutate(zip = as.character(zip)) %>% 
-  group_by(zip) %>% 
-  summarize(price = median(price),
-            percent_house = sum(house_type=="huis")/n() * 100,
-            building_type = Mode(building_type),
-            room = median(room),
-            bedroom = median(bedroom),
-            bathroom = median(bathroom),
-            energy_label = Mode(energy_label),
-            living_area = median(living_area),
-            house_area = median(house_age),
-            has_garden = Mode(has_garden),
-            has_balcony = Mode(has_balcony),
-            house_age = median(house_age),
-            bus_dist = median(bus_dist),
-            subway_dist = median(subway_dist),
-            train_dist = median(train_dist),
-            university_dist = median(university_dist),
-            school_dist = median(school_dist),
-            mall_dist = median(mall_dist),
-            supermarket_dist = median(supermarket_dist)) %>% 
-  st_drop_geometry() %>%
-  left_join(NH_PC4, by = c("zip"="PC4"))
-
-funda_agg_st <- st_as_sf(funda_agg)
-
-mapview(funda_agg_st, zcol = "price", col.regions=brewer.pal(9, "YlOrRd"))
-
-coordsW <- funda_agg_st%>%
-  st_centroid()%>%
-  st_geometry()
-
-greendata_KNN <- knearneigh(coordsW, k=5) #Identify nearest neighbours for spatial weights 
-
-greendata_nbq_KNN <- knn2nb(greendata_KNN, sym=T) #Neighbours list from knn object
-summary (greendata_nbq_KNN)
-greendata_KNN_w <- nb2listw(greendata_nbq_KNN, style="W", zero.policy = TRUE)
-mc_global <- moran.mc(funda_agg_st$price, greendata_KNN_w, 2999, alternative="greater") #here 2999 is the simulation number, if taking too long you can also use 999
-
-#plot the  Moran's I
-plot(mc_global)
-mc_global
-
-model <- lm(price~ room + bedroom + bathroom + living_area + house_age + bus_dist +subway_dist + train_dist + university_dist + school_dist + mall_dist + supermarket_dist, data = funda_agg )
-summary(model)
-
-sum(funda_data$house_type=="huis")
+#################################### ??? 
+#add the residual to polygon and plot
+funda_data$res_sac <- residuals(sac_model)
+#plot using t-map
+lmres <-qtm(funda_data, "res_lm")
+sacres <-qtm(funda_data, "res_sac")
+#compare with OLS residual
+tmap_arrange(lmres, sacres, asp = 1, ncol = 2)
