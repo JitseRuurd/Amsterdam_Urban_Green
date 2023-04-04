@@ -26,7 +26,6 @@ gwr_result %>%
   mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
 
 
-
 gwr_result %>% 
   filter(school_dist_TV < -1.91| school_dist_TV > 1.91) %>% 
   mapview( zcol = "school_dist", col.regions=brewer.pal(9, "YlOrRd"))
