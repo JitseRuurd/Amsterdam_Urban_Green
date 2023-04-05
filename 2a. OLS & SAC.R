@@ -1,8 +1,10 @@
-easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync", "systemfonts")
+easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "car", "spdep", "spatialreg", "leafsync", "systemfonts", "stars")
 
 #load data
 funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
 PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
+ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_300m.tif")
+
 
 #plot dependent variable
 # Extend bbox for plots
@@ -16,14 +18,54 @@ bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top
 bbox_new <- bbox_new %>%
   st_as_sfc() 
 
-library(stars)
-ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_100m.tif")
+
+
+
+ndvi_plot <- tm_shape(ndvi, bbox = bbox_new)+
+  tm_raster(palette = "YlGn", title = "NDVI value") +
+  tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white", alpha = 0, border.col = "black")+
+  tm_layout(title = "Amsterdam NDVI values with 300m range",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
+
+houseprices_plot <- tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white", border.col = "black")+
+  tm_shape(funda_data)+
+  tm_dots(c("price_m2"), title = "Price (m2)", 
+          breaks = c(0,2500,5000,7500,10000,12500,15000,20000,30000),
+          size = 0.1) + 
+  tm_layout(title = "Amsterdam house prices",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
+
+tmap_arrange(ndvi_plot,houseprices_plot, asp = NULL, ncol = 2)
+
+
+
+
+
+
+
+
+
+
 
 
 tm_shape(ndvi, bbox = bbox_new)+
-  tm_raster() +
+  tm_raster(palette = "YlGn") +
   tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white", alpha = 0)+
+  tm_polygons(col = "white", alpha = 0, border.col = "black")+
   tm_shape(funda_data)+
   tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,1000,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
   tm_layout(title = "Amsterdam house prices",
@@ -38,18 +80,6 @@ tm_shape(ndvi, bbox = bbox_new)+
 
 
 
-tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white")+
-tm_shape(funda_data)+
-  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
-  tm_layout(title = "Amsterdam house prices",
-            title.fontfamily = "cambria",
-            title.fontface = "bold",
-            legend.text.fontfamily = "cambria",
-            legend.title.fontfamily = "cambria",
-            legend.position = c("right", "top"),
-            legend.text.size = 0.75,
-            legend.title.size = 1)
 
 tm_shape(PC4, bbox = bbox_new)+
   tm_polygons(col = "white")+

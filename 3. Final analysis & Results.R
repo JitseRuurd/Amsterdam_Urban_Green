@@ -94,13 +94,16 @@ bw_df %>%
 
 #################### create coef plot for ndvi
 
+library(RColorBrewer)
+my_palette <- terrain.colors(10)[3:9]
+
 
 tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white", alpha = 0)+
+  tm_polygons(col = "white", alpha = 0, border.col = "Black")+
   tm_shape(gwr_result %>%  filter(ndvi300_TV < -1.96| ndvi300_TV > 1.96))+
-  tm_dots(c("ndvi300"), title = "Price (m2)", size = 0.1) + 
-  tm_layout(title = "Amsterdam house prices",
-            title.fontfamily = "cambria",
+  tm_dots(c("ndvi300"), title = "Coefficient", size = 0.1) + 
+  tm_layout(title = "Significant (95%) NDVI coefficients GWR model",
+            title.fontfamily = "Cambria",
             title.fontface = "bold",
             legend.text.fontfamily = "cambria",
             legend.title.fontfamily = "cambria",
