@@ -5,7 +5,7 @@ funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_dist
 PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 
 #plot dependent variable
-# make some bbox magic 
+# Extend bbox for plots
 bbox_new <- st_bbox(PC4) # current bounding box 
 xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
 yrange <- bbox_new$ymax - bbox_new$ymin # range of y values 
@@ -13,8 +13,8 @@ yrange <- bbox_new$ymax - bbox_new$ymin # range of y values
 bbox_new[3] <- bbox_new[3] + (0.25 * xrange) # xmax - right 
 # bbox_new[2] <- bbox_new[2] - (0.25 * yrange) # ymin - bottom 
 bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
-bbox_new <- bbox_new %>% # take the bounding box ... 
-  st_as_sfc() # ... and make it a sf polygon # looks better, does it? 
+bbox_new <- bbox_new %>%
+  st_as_sfc() 
 
 library(stars)
 ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_100m.tif")
@@ -69,11 +69,12 @@ funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spat
 funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
 funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
 mc_global_knn <- moran.mc(funda_data$price_m2, funda_KNN_w, 2999, alternative="greater")
-plot(mc_global_knn, xlab = "Dependent variable (price m2)")
+plot(mc_global_knn, xlab = "Dependent variable (price per squared meter)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
 equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi300 + centre_dist + zuid_dist + shops_dist + school_dist
+
 #OLS
 model <- lm(equation, 
             data = funda_data)
@@ -90,10 +91,6 @@ par(mfrow=c(1,1))
 plot(mc_global_OLS, xlab = "Residuals of OLS model")
 mc_global_OLS
 
-funda_data$res_lm <- model$residuals
-#Now plot the residuals
-mapview(funda_data, zcol = "res_lm", col.regions=brewer.pal(9, "YlOrRd"))
-
 #SAC model
 sac_model = sacsarlm(equation, data = funda_data, listw= funda_KNN_w, zero.policy = TRUE)
 summary(sac_model, Nagelkerke=T)
@@ -103,11 +100,33 @@ plot(mc2_global_sac, xlab = "Residuals of SAC model")
 mc2_global_sac
 #No more spatial autocorrelation
 
-#################################### ??? 
+#Plot residuals 
 #add the residual to polygon and plot
+funda_data$res_lm <- model$residuals
 funda_data$res_sac <- residuals(sac_model)
-#plot using t-map
-lmres <-qtm(funda_data, "res_lm")
-sacres <-qtm(funda_data, "res_sac")
-#compare with OLS residual
-tmap_arrange(lmres, sacres, asp = 1, ncol = 2)
+
+tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white")+
+  tm_shape(funda_data)+
+  tm_dots(c("res_lm"), title = "Residual", size = 0.1) + 
+  tm_layout(title = "Residuals OLS model",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
+
+tm_shape(PC4, bbox = bbox_new)+
+  tm_polygons(col = "white")+
+  tm_shape(funda_data)+
+  tm_dots(c("res_sac"), title = "Residual", size = 0.1) + 
+  tm_layout(title = "Residuals SAC model",
+            title.fontfamily = "cambria",
+            title.fontface = "bold",
+            legend.text.fontfamily = "cambria",
+            legend.title.fontfamily = "cambria",
+            legend.position = c("right", "top"),
+            legend.text.size = 0.75,
+            legend.title.size = 1)
