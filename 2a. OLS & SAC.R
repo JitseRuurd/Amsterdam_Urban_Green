@@ -73,7 +73,7 @@ plot(mc_global_knn, xlab = "Dependent variable (price m2)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
-equation <- price_m2 ~ bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi500 + centre_dist + zuid_dist + shops_dist + school_dist
+equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi500 + centre_dist + zuid_dist + shops_dist + school_dist
 #OLS
 model <- lm(equation, 
             data = funda_data)
