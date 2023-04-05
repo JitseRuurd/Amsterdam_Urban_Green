@@ -54,7 +54,7 @@ tm_shape(funda_data)+
 tm_shape(PC4, bbox = bbox_new)+
   tm_polygons(col = "white")+
   tm_shape(funda_data)+
-  tm_dots(c("ndvi500"), title = "NDVI (500m range)", size = 0.1) + 
+  tm_dots(c("ndvi300"), title = "NDVI (300m range)", size = 0.1) + 
   tm_layout(title = "Amsterdam NDVI values",
             title.fontfamily = "cambria",
             title.fontface = "bold",
@@ -73,7 +73,7 @@ plot(mc_global_knn, xlab = "Dependent variable (price m2)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
-equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi500 + centre_dist + zuid_dist + shops_dist + school_dist
+equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi300 + centre_dist + zuid_dist + shops_dist + school_dist
 #OLS
 model <- lm(equation, 
             data = funda_data)
