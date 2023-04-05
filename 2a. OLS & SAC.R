@@ -6,7 +6,7 @@ PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_300m.tif")
 
 
-#plot dependent variable
+#plot variables of interest
 # Extend bbox for plots
 bbox_new <- st_bbox(PC4) # current bounding box 
 xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
@@ -17,9 +17,6 @@ bbox_new[3] <- bbox_new[3] + (0.25 * xrange) # xmax - right
 bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
 bbox_new <- bbox_new %>%
   st_as_sfc() 
-
-
-
 
 ndvi_plot <- tm_shape(ndvi, bbox = bbox_new)+
   tm_raster(palette = "YlGn", title = "NDVI value") +
@@ -51,53 +48,10 @@ houseprices_plot <- tm_shape(PC4, bbox = bbox_new)+
 
 tmap_arrange(ndvi_plot,houseprices_plot, asp = NULL, ncol = 2)
 
-
-
-
-
-
-
-
-
-
-
-
-tm_shape(ndvi, bbox = bbox_new)+
-  tm_raster(palette = "YlGn") +
-  tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white", alpha = 0, border.col = "black")+
-  tm_shape(funda_data)+
-  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,1000,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
-  tm_layout(title = "Amsterdam house prices",
-            title.fontfamily = "cambria",
-            title.fontface = "bold",
-            legend.text.fontfamily = "cambria",
-            legend.title.fontfamily = "cambria",
-            legend.position = c("right", "top"),
-            legend.text.size = 0.75,
-            legend.title.size = 1)
-
-
-
-
-
-tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white")+
-  tm_shape(funda_data)+
-  tm_dots(c("ndvi300"), title = "NDVI (300m range)", size = 0.1) + 
-  tm_layout(title = "Amsterdam NDVI values",
-            title.fontfamily = "cambria",
-            title.fontface = "bold",
-            legend.text.fontfamily = "cambria",
-            legend.title.fontfamily = "cambria",
-            legend.position = c("right", "top"),
-            legend.text.size = 0.75,
-            legend.title.size = 1)
-
 #test global spatial autocorrelation with Moran's I
 funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
-funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
-funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
+funda_KNN_list <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
+funda_KNN_w <- nb2listw(funda_KNN_list, style="W", zero.policy = TRUE)
 mc_global_knn <- moran.mc(funda_data$price_m2, funda_KNN_w, 2999, alternative="greater")
 plot(mc_global_knn, xlab = "Dependent variable (price per squared meter)")
 mc_global_knn
