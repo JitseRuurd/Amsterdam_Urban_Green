@@ -41,7 +41,7 @@ tm_shape(ndvi, bbox = bbox_new)+
 tm_shape(PC4, bbox = bbox_new)+
   tm_polygons(col = "white")+
 tm_shape(funda_data)+
-  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,1000,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
+  tm_dots(c("price_m2"), title = "Price (m2)", breaks = c(0,2500,5000,7500,10000,12500,15000,20000,30000), size = 0.1) + 
   tm_layout(title = "Amsterdam house prices",
             title.fontfamily = "cambria",
             title.fontface = "bold",
@@ -68,8 +68,8 @@ tm_shape(PC4, bbox = bbox_new)+
 funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
 funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
 funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
-mc_global_knn <- moran.mc(funda_data$price, funda_KNN_w, 2999, alternative="greater")
-plot(mc_global_knn)
+mc_global_knn <- moran.mc(funda_data$price_m2, funda_KNN_w, 2999, alternative="greater")
+plot(mc_global_knn, xlab = "Dependent variable (price m2)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
@@ -86,7 +86,8 @@ plot(model)
 #test spatial autocorrelation in residuals
 mc_global_OLS <- moran.mc(model$residuals, funda_KNN_w, 2999, zero.policy= TRUE, alternative="greater")
 #plot the  Moran's I
-plot(mc_global_OLS)
+par(mfrow=c(1,1))
+plot(mc_global_OLS, xlab = "Residuals of OLS model")
 mc_global_OLS
 
 funda_data$res_lm <- model$residuals
@@ -98,7 +99,7 @@ sac_model = sacsarlm(equation, data = funda_data, listw= funda_KNN_w, zero.polic
 summary(sac_model, Nagelkerke=T)
 #check residual autocorrelation
 mc2_global_sac <-moran.mc(sac_model$residuals, funda_KNN_w, 2999, alternative="greater")
-plot(mc2_global_sac)
+plot(mc2_global_sac, xlab = "Residuals of SAC model")
 mc2_global_sac
 #No more spatial autocorrelation
 
