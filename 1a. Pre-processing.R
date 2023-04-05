@@ -1,16 +1,16 @@
-###Important to specify correct names for the original data and the desination data
+###Important to specify correct names for the original data and the destination data
 
 
 easypackages::packages("raster", "sf", "tidyverse", "tidygeocoder", "mapview")
 #paths
 origin_path <- "Scraper/data/"
-desination_path <-  "data/Houseprices"
+destination_path <-  "data/Houseprices/"
 
 #below names need to be specified
 
 orgin_df_name <- "funda_buy_amsterdam_31-03-2023_full.csv"
-desination_df_name <- "funda_buy_amsterdam_31-03-2023_fulllatlon.csv"
-desination_gpkg_name <- "funda_buy_amsterdam_31-03-2023_full.gpkg"
+destination_df_name <- "funda_buy_amsterdam_31-03-2023_fulllatlon.csv"
+destination_gpkg_name <- "funda_buy_amsterdam_31-03-2023_full.gpkg"
 
 #load raw scraped Funda data from the folder
 
@@ -38,7 +38,7 @@ df_geo <- df %>%
   geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
 
 #wire to csv
-write.csv(df_geo, paste0(desination_path, desination_df_name))
+write.csv(df_geo, paste0(destination_path, destination_df_name))
 
 #write to geopackage 
 
@@ -56,8 +56,14 @@ df_spatial_clipped <- st_intersection(df_spatial, st_transform(st_read("data/Ams
 #view data
 mapview(df_spatial_clipped)
 
+#adjust for faulty house age values
+
+df_spatial_clipped <- df_spatial_clipped %>% 
+  mutate(house_age = ifelse(house_age == 2023, NA, house_age),
+         house_age = ifelse(is.na(house_age), mean(house_age, na.rm = T), house_age))
+
 #write to geopackage
-st_write(df_spatial_clipped,paste0(desination_path, desination_gpkg_name))
+st_write(df_spatial_clipped,paste0(destination_path, destination_gpkg_name))
 
 
 
