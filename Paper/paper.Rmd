@@ -1,5 +1,6 @@
 ---
-title: "Explaining Noord-Holland house prices"
+title: "Estimating the Effect of Urban Green Spaces on Residential House Prices in Amsterdam"
+subtitle: "An Empirical Study using Remote Sensing and Geographically Weighted Regression" 
 author: 
   - Yúri Grings
   - Thomas Nibbering
@@ -8,12 +9,22 @@ date: "2023-03-21"
 
 output: 
     pdf_document:
+        extra_dependencies: ["float", "booktabs"]
         latex_engine: xelatex
+        pandoc_args: [
+      "-V", "classoption=twocolumn"
+    ]
+
+subparagraph: yes
+header-includes: |
+  \usepackage{titlesec}
+  \titlespacing{\section}{0pt}{10pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \titlespacing{\subsection}{0pt}{4pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \titlespacing{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
 mainfont: Cambria
-classoption:
-- twocolumn
 bibliography: references.bib
 csl: apa.csl
+
 ---
 
 
@@ -23,6 +34,7 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE)
 ```
 
 ```{r include=FALSE}
+#all code for plots
 library(mapview)
 library(tidyverse)
 library(tmap)
@@ -33,217 +45,91 @@ PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 setwd("Paper")
 ```
 
-\maketitle
+# 1. Introduction
+Green spaces play an important role in urban ecosystems. As a natural purifier for cities, these areas help control soil erosion [1], improve air quality [2, 3], reduce the urban heat island effect [4–6] and are considered to be aesthetically pleasing [7]. Moreover, green areas in cities are shown to provide notable improvements in residents’ physical and mental wellbeing [8, 9]. As the benefits of greenness in urban areas are increasingly recognised, numerous cities have developed urban greening programs to expand parks, build green roofs or plant more trees [10–12]. However, evaluating the effects of these initiatives to justify their costs remains a challenge, partly due to data sparsity. 
 
-# 1. Abstract
-In an effort to create a green and diversified energy system, the Dutch national government aims to stimulate the adoption of renewables. In this context, wind energy is considered to be one of the most promising. However, the potential of this type of renewable is greatly influenced by existing land-use claims and related spatial and social policies. It becomes clear that, shifting to wind energy as a renewable energy source is a key challenge in densely populated countries, such as the Netherlands. Therefore, this study aims to examine the energy potential of suitable onshore wind farm sites in the province of North-Holland. In order to identify suitable areas for the placement of wind turbines, several spatial and social criteria and constraints were considered in three scenarios using a multi-criteria decision analysis method. Based on a power density function, the total energy potential of the suitable areas was determined. The results of the scenarios ranged from 2 MW to 3017 MW of prospective energy generable. These large ranges of potential show the significant impact of constraints and criteria and underline the need for a comprehensive understanding of the relationship between site suitability and spatial policies and choices.
+A review of literature revealed that there are several studies that aimed to examine the effect of urban green spaces on residential house prices [13–19]. Often these studies adopted a hedonic pricing approach to estimate the economic value that individuals place on particular property characteristics, as reflected in the real-estate prices [14, 15]. However, most literature only focused on the distance to urban green areas as a valuation indicator [20, 21]. Here, a few studies considered a more comprehensive appreciation of greenness in cities by employing vegetation indices and the interaction with property and public amenities [16, 17, 22, 23]. 
 
+Among the literature that explored the property value premium of urban green spaces more exhaustive, most adopted the normalised difference vegetation index (NDVI) [16, 22, 23]. Here, the relative abundance of vegetation was measured across varying buffer distances using remote sensing systems with various spatial resolutions. Moreover, most of these studies also considered the interaction with residential and public amenities, such as the number of rooms or proximity to convenience stores [16, 23]. However, these analyses were mainly performed in cities with conservative urban greening programs in place [23]. Lastly, the adoption of NDVI for identifying (urban) green spaces is often criticised due to its sensitivity to varying spatial scales and inability to differentiate between vegetation types [24]. Nonetheless, the index is widely accepted and can be considered almost a standard approach [25, 26]. 
 
+Based on the examined literature, a hedonic pricing approach in combination with the normalised difference vegetation index and the interaction with particular amenities emerges as an effective method to estimate the effect of urban green spaces on residential house prices. Given the limited literature available on property value premiums associated with greenness exposure in cities with more progressive urban greening programs, this study aims to answer the research question of what the economic value of urban green spaces in the city of Amsterdam is in the year 2023, as reflected in the real-estate prices.
 
-Plot in text
-
-```{r test3, message=FALSE, warning=FALSE, include=FALSE}
-pdf("figures/plot.pdf")
-tm_shape(funda_data) +
-  tm_dots(c("price", "living_area"))
-dev.off()
-```
+# 2. Methods
+## 2.1 Study Area
+The geographical scope in this study concentrated on the city of Amsterdam, as presented in Figure 1. The city is situated in the Western part of the Netherlands and home to almost 880,000 residents [27] that occupy a space of 219.3 km2  [28]. As a result, the city is considered one of the most densely populated in the country. Surrounding the residential areas, the vast majority of land is occupied with vegetation [29]. Moreover, the municipality has progressive urban greening programs in place, stimulating and obligating residents and city districts to participate in greening initiatives [12]. As a result, these policies aimed at expanding urban green spaces have the potential to increase nearby housing premiums. 
 
 ```{=latex}
-\begin{figure}[ht]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/raster.png}
-  \caption{This is a figure.}
+  \includegraphics[width=\linewidth]{figures/study_area.png}
+  \caption{Overview of the study area.}
 \end{figure}
-
 ```
 
-```{r eval=FALSE, include=FALSE}
-library(xtable)
-xtable(tail(mtcars))
+## 2.2 Data
+In this study, property listings were obtained from Funda.nl, a Dutch online real-estate platform [30]. Here, data included the sale price and property characteristics of residential houses in Amsterdam listed on the platform on 31 March 2023. Moreover, information about multiple public amenities in Amsterdam were obtained from a variety of sources, including ArcGIS [31], OpenStreetMap.org [32, 33] and the municipality of Amsterdam [34]. Selection of public amenities, used as controlling variables, were based on applicable literature, as presented in Table 1. Adjusting for these variables was done to limit the effect of potential confounders on the association of interest. Finally, remote sensing images in red and near-infrared were obtained from Sentinel-2 in August 2022 [35]. This allowed on the capitalisation of high greenness levels in that period, leading to improved differentiation between green and urban areas. 
+
+## 2.3 Data Enrichment
+ 
+```{=latex}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/raster5.png}
+  \caption{Illustrative figrue of the focal statistics as buffer distance.}
+\end{figure}
+```
+## 2.4 Analysis
+
+```{=latex}
+\begin{table}[]
+\centering
+\caption{Included variables}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Variable            & Mean (n = 1719) & SD \\ \midrule
+Living area (m2)    & 105.7           & 71.0               \\
+Bedroom (N)         & 2.5             & 1.4                \\
+Bathroom (N)        & 1.1             & 0.7                \\
+House age (Years)   & 76.9            & 63.2               \\
+Train distance (m)  & 1703.7          & 958.2              \\
+Metro distance (m)  & 1303.2          & 951.8              \\
+Tram distance (m)   & 689.1           & 1024.7             \\
+NDVI 300m range     & 0.212           & 0.069              \\
+Centre distance (m) & 3770.5          & 2288.1             \\
+Zuid distance (m)   & 4659.2          & 2228.3             \\
+School distance (m) & 268.3           & 183.8              \\
+Shops distance (m)  & 266.7           & 206.9              \\
+                    &                 &                    \\ \bottomrule
+
+\end{tabular}
+\end{table}
 ```
 
 
+ 
+## 2.4.1 Ordinary Least Squares
 
+
+## 2.4.2 Spatial Dependence and Heterogeineity
+
+
+## 2.4.3 Geographically Weighted Regression
+
+# 3. Results and Discussion
 
 
 ```{=latex}
-\begin{table*}[ht]
-\centering
-\begin{tabular}{rrrrrrrrrrrr}
-  \hline
- & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\ 
-  \hline
-Porsche 914-2 & 26.00 & 4.00 & 120.30 & 91.00 & 4.43 & 2.14 & 16.70 & 0.00 & 1.00 & 5.00 & 2.00 \\ 
-  Lotus Europa & 30.40 & 4.00 & 95.10 & 113.00 & 3.77 & 1.51 & 16.90 & 1.00 & 1.00 & 5.00 & 2.00 \\ 
-  Ford Pantera L & 15.80 & 8.00 & 351.00 & 264.00 & 4.22 & 3.17 & 14.50 & 0.00 & 1.00 & 5.00 & 4.00 \\ 
-  Ferrari Dino & 19.70 & 6.00 & 145.00 & 175.00 & 3.62 & 2.77 & 15.50 & 0.00 & 1.00 & 5.00 & 6.00 \\ 
-  Maserati Bora & 15.00 & 8.00 & 301.00 & 335.00 & 3.54 & 3.57 & 14.60 & 0.00 & 1.00 & 5.00 & 8.00 \\ 
-  Volvo 142E & 21.40 & 4.00 & 121.00 & 109.00 & 4.11 & 2.78 & 18.60 & 1.00 & 1.00 & 4.00 & 2.00 \\ 
-   \hline
-\end{tabular}
-\end{table*}
-
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{figures/ndvi_houseprices.png}
+  \caption{This is a figure.}
+\end{figure*}
 ```
 
 
-
-# 2. Introduction
-One of the aims of the Dutch national government is to stimulate renewables in order to create a green and diversified energy system [1]. Among the several alternatives available, wind energy is considered to be one of the most promising due to its limited environmental impact and economic viability [2]. Despite the advantages, wind energy still plays a marginal role in the total Dutch energy consumption [3]. While various reasons can be identified, this small share mainly relates to the fact that wind energy has to compete with other spatial claims that may be deemed more important. 
-
-Under the current legal framework, provinces are largely responsible for shaping spatial and energy plans [4]. However, the allocation for this type of renewable poses significant challenges. Apart from technical and physical incompatibility that influences the onshore location of wind farms, societal and environmental considerations are similarly important. Nature and other valuable landscapes often have a protected status, limiting or at least constraining the allocation of wind farms [5]. Moreover, societal resistance to environmental impact experienced by those near wind turbines also inspire spatial energy policies and choices [6]. As a result, the transition to onshore wind turbines as a source of renewable energy represents a key challenge in a country that is as densely populated as the Netherlands. 
-
-
-A review of literature revealed that there is a multitude of studies that aimed to identify the spatial potential for wind energy deployment. Often studies applied geospatial information systems in combination with a multi-criteria decision analysis to examine the suitability of sites [2, 7]. Here, areas of interest were evaluated based on a variety of criteria and constraints. In general, these studies employed a rule-based approach considering mostly physical [8], economic [9, 10] and environmental [2] aspects with only a few placing emphasis on social considerations [11, 12]. Moreover, the literature revealed that studies using a scenario-based approach were limited, especially in the Netherlands [13]. As a result, a comprehensive understanding of the relationship between site suitability for wind farms and multiple spatial policies and choices remain underdeveloped.  
-
-In an effort to examine the energy potential of sites suitable for the production of wind energy, mathematical functions are the main tools used in literature [14]. Among the several types available, wind power density is most commonly employed [15–17]. Although several studies have proven its limitations in wind energy assessment due to its flexibility and simplicity, the method is widely accepted and can be considered almost a standard approach [18, 19]. 
-
-
-Based on the examined literature, multi-criteria decision analysis in combination with a wind power density function emerges as an effective tool for assessing the energy potential of sites suitable for the production of wind energy. Given the limited literature available on wind farm allocation in the Netherlands and the evident challenges associated with balancing elements of interest, this study aims to provide a preliminary overview of the energy potential of suitable onshore wind farm sites in the province of North-Holland. 
-
-# 3. Methods
-## 3.1 Study Area
-In this study, the geographical scope was limited to the province of North-Holland, as presented in Figure 1. The area is situated in the North-Western part of the Netherlands and occupies an onshore space of 2,840 km2 [5]. The province is home to almost 2,8 million inhabitants, making it one of the most densely populated regions in the country (684 inhabitants/km2) [20]. Outside the large urban areas, the vast majority of the land is agricultural with two areas designated as National Parks [20, 21]. At the moment, the province is obligated by the Dutch national government to have an extra installed onshore wind capacity of 105.5 MW [4, 5]. 
+# 4. Conclusion
 
 
 
-Plot klein 
-
-```{r test1, echo=FALSE, fig.cap="Figure number", message=FALSE, warning=FALSE}
-#plot dependent variable
-# make some bbox magic 
-bbox_new <- st_bbox(PC4) # current bounding box 
-xrange <- bbox_new$xmax - bbox_new$xmin # range of x values 
-yrange <- bbox_new$ymax - bbox_new$ymin # range of y values 
-# bbox_new[1] <- bbox_new[1] - (0.25 * xrange) # xmin - left 
-bbox_new[3] <- bbox_new[3] + (0.35 * xrange) # xmax - right 
-# bbox_new[2] <- bbox_new[2] - (0.25 * yrange) # ymin - bottom 
-bbox_new[4] <- bbox_new[4] + (0.25 * yrange) # ymax - top 
-bbox_new <- bbox_new %>% # take the bounding box ... 
-  st_as_sfc() # ... and make it a sf polygon # looks better, does it? 
-
-tm_shape(PC4, bbox = bbox_new)+
-  tm_polygons(col = "white")+
-  tm_shape(funda_data)+
-  tm_dots(c("ndvi500"), title = "NDVI (500m range)", size = 0.1) + 
-  tm_layout(title = "Amsterdam NDVI values",
-            #title.fontfamily = "cambria",
-            title.fontface = "bold",
-            #legend.text.fontfamily = "cambria",
-            #legend.title.fontfamily = "cambria",
-            legend.position = c("right", "top"),
-            legend.text.size = 0.75,
-            legend.title.size = 1)
-
-```
-
-
-
-
-```{r foo, out.width="100%", fig.cap="An example image.", include=FALSE, echo=FALSE}
-knitr::include_graphics("figures/plot.pdf")
-```
-
-
-
-
-
-\onecolumn
-of plot groot
-
-```{r test2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Plot of NH full page"}
-tm_shape(funda_data) +
-  tm_dots()
-```
-
-Bron vermelding zo:
-@fotheringham2017multiscale
-
-Of zo:
-[-@fotheringham2017multiscale]
-
-
-# References
-
-<div id="refs"></div>
-
-# Script 1
-
-```{r eval = FALSE}
-easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "spdep")
-
-
-#Visualize results GWR model
-gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi300_m2.gpkg")
-funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
-
-funda_data %>% 
-  mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(tram_dist_TV < -1.96| tram_dist_TV > 1.96) %>% 
-  mapview( zcol = "tram_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(train_dist_TV < -1.96| train_dist_TV > 1.96) %>% 
-  mapview( zcol = "train_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(metro_dist_TV < -1.96| metro_dist_TV > 1.96) %>% 
-  mapview( zcol = "metro_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-
-gwr_result %>% 
-  filter(ndvi300_TV < -1.91| ndvi300_TV > 1.91) %>% 
-  mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
-
-
-gwr_result %>% 
-  filter(school_dist_TV < -1.91| school_dist_TV > 1.91) %>% 
-  mapview( zcol = "school_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(shops_dist_TV < -1.91| shops_dist_TV > 1.91) %>% 
-  mapview( zcol = "shops_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(centre_dist_TV < -1.91| centre_dist_TV > 1.91) %>% 
-  mapview( zcol = "centre_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  filter(zuid_dist_TV < -1.91| zuid_dist_TV > 1.91) %>% 
-  mapview( zcol = "zuid_dist", col.regions=brewer.pal(9, "YlOrRd"))
-
-gwr_result %>% 
-  mapview( zcol = "residual", col.regions=brewer.pal(9, "YlOrRd"))
-
-
-funda_KNN <- knearneigh(funda_data, k=50) #Identify k nearest neighbours for spatial weights 
-funda_nbq_KNN <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
-funda_KNN_w <- nb2listw(funda_nbq_KNN, style="W", zero.policy = TRUE)
-
-mc_gwr <- moran.mc(gwr_result$residual, funda_KNN_w, 2999, zero.policy= TRUE, alternative="greater")
-mc_gwr
-plot(mc_gwr)
-funda_data %>% 
-  ggplot(aes(y = price_m2, x = metro_dist)) + geom_point()
-
-map <- mapview(gwr_result, zcol = "metro", col.regions=brewer.pal(9, "YlOrRd"))
-
-map
-
-gwr_result %>% 
-  ggplot(aes(x = residual)) + geom_density()
-
-funda_data <- st_read("data/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
-PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
-
-tm_shape(PC4)+
-  tm_polygons()+
-  tm_shape(gwr_result)+
-  tm_dots(c("train_dist")) + 
-  tm_layout(legend.position = c("right", "top"), 
-            legend.text.size = 0.5, legend.title.size = 0.8)
-
-```
+# 5. References
 
