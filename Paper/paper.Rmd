@@ -75,7 +75,7 @@ In this study, property listings were obtained from Funda.nl, a Dutch online rea
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/raster5.png}
-  \caption{Illustrative figrue of the focal statistics as buffer distance.}
+  \caption{Illustrative figure of the focal statistics as buffer distance.}
 \end{figure}
 ```
 ## 2.4 Analysis
