@@ -85,6 +85,28 @@ to increase nearby housing premiums.
 
 ![Overview of study area](Paper/figures/study_area.png)
 
+### Data
+
+In this study, property listings were obtained from Funda.nl, a Dutch
+online real-estate platform \[30\]. Here, data included the sale price
+and property characteristics of residential houses in Amsterdam listed
+on the platform on 31 March 2023. Moreover, information about multiple
+public amenities in Amsterdam were obtained from a variety of sources,
+including ArcGIS \[31\], OpenStreetMap.org \[32, 33\] and the
+municipality of Amsterdam \[34\]. Selection of public amenities, used as
+controlling variables, were based on applicable literature, as presented
+in Table 1. Adjusting for these variables was done to limit the effect
+of potential confounders on the association of interest. Finally, remote
+sensing images in red and near-infrared were obtained from Sentinel-2 in
+August 2022 \[35\]. This allowed on the capitalisation of high greenness
+levels in that period, leading to improved differentiation between green
+and urban areas.
+
+### Data Enrichtment
+
+![Illustrative figure of using focal statistics as a buffer
+function](Paper/figures/raster5.png)
+
 ## We used the Funda-Scraper package to scrape our data
 
 The query below was used to scrape our final research data on
