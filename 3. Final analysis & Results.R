@@ -1,15 +1,8 @@
 easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "spdep")
 
-
-
-
 #Visualize results GWR model
 gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi300_m2.gpkg")
 funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
-
-mean(funda_data$shops_dist)
-sd(funda_data$shops_dist)
-
 
 funda_data %>% 
   mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
@@ -26,11 +19,9 @@ gwr_result %>%
   filter(metro_dist_TV < -1.96| metro_dist_TV > 1.96) %>% 
   mapview( zcol = "metro_dist", col.regions=brewer.pal(9, "YlOrRd"))
 
-
 gwr_result %>% 
   filter(ndvi300_TV < -1.96| ndvi300_TV > 1.96) %>% 
   mapview( zcol = "ndvi300", col.regions=brewer.pal(9, "YlOrRd"))
-
 
 gwr_result %>% 
   filter(school_dist_TV < -1.96| school_dist_TV > 1.96) %>% 
