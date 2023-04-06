@@ -102,7 +102,7 @@ August 2022 \[35\]. This allowed on the capitalisation of high greenness
 levels in that period, leading to improved differentiation between green
 and urban areas.
 
-### Data Enrichtment
+### Data Enrichment
 
 ![Illustrative figure of using focal statistics as a buffer
 function](Paper/figures/raster5.png)
