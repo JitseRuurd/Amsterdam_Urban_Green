@@ -74,5 +74,4 @@ funda_data$ndvi300 <- ndvi300$NDVI_Amsterdam_300m.tif
 funda_data$ndvi500 <- ndvi500$NDVI_Amsterdam_500m.tif
 
 #write results to updated gpkg
-
 st_write(funda_data, "data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")

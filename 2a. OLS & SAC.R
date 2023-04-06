@@ -57,6 +57,7 @@ plot(mc_global_knn, xlab = "Dependent variable (price per squared meter)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
+#set equation for regression models
 equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi300 + centre_dist + zuid_dist + shops_dist + school_dist
 
 #OLS
