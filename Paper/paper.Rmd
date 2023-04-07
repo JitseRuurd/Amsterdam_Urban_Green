@@ -29,7 +29,6 @@ csl: apa.csl
 
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE)
 
