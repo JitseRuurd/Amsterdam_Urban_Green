@@ -21,6 +21,8 @@ header-includes: |
   \titlespacing{\section}{0pt}{10pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
   \titlespacing{\subsection}{0pt}{4pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
   \titlespacing{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \usepackage{geometry}
+  \geometry{left=1.5cm,right=1.5cm}
 mainfont: Cambria
 bibliography: references.bib
 csl: apa.csl
@@ -70,39 +72,45 @@ The geographical scope in this study concentrated on the city of Amsterdam, as p
 In this study, property listings were obtained from Funda.nl, a Dutch online real-estate platform [30]. Here, data included the sale price and property characteristics of residential houses in Amsterdam listed on the platform on 31 March 2023. Moreover, information about multiple public amenities in Amsterdam were obtained from a variety of sources, including ArcGIS [31], OpenStreetMap.org [32, 33] and the municipality of Amsterdam [34]. Selection of public amenities, used as controlling variables, were based on applicable literature, as presented in Table 1. Adjusting for these variables was done to limit the effect of potential confounders on the association of interest. Finally, remote sensing images in red and near-infrared were obtained from Sentinel-2 in August 2022 [35]. This allowed on the capitalisation of high greenness levels in that period, leading to improved differentiation between green and urban areas. 
 
 ## 2.3 Data Enrichment
+
+To examine the economic value of urban green spaces as reflected in the real-estate prices, coordinates for each property were obtained using geocoding and transformed into a single coordinate reference system, i.e. EPSG 28992, to ensure consistency and accuracy of the analysis. Exclusion criteria were in place for properties for which coordinates could not be obtained, i.e. future housing projects. Moreover, straight line distances from each property to the nearest public amenities were enumerated using the nearest neighbour algorithm in combination with Euclidean distance. This is a common approach to adjust for the implicit premium of local public amenities on house prices. 
+
+Furthermore, urban green vegetation was measured using NDVI. This vegetation index was derived from the Sentinel-2 satellite, as expressed in Equation 1. Here, N and R refer to the spectral reflectance measurements obtained in the red and near-infrared regions, respectively. In general, the index ranges from -1.0 to 1.0 with positive values indicating greenness. The usage of this remote sensing system provided more accurate images for identifying green spaces, i.e. 10x10m, compared to the moderate resolution of Landsat, i.e. 30x30m. 
+
+
  
-```{=latex}
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figures/raster5.png}
-  \caption{Illustrative figure of the focal statistics as buffer distance.}
-\end{figure}
-```
+Surrounding the residential properties, mean values of NDVI were obtained at varying spatial scales, i.e. 100, 300 and 500m. In doing so, the variation of greenness around the property was included in the analysis. Moreover, the usage of these particular thresholds ensured that the results were less vulnerable to scaling effects given the resolution of the input data. Finally, based on the extraction and enhancement of data, several independent variables were identified and constructed, as presented in Table 1. These variables were included in the hedonic pricing model, as will be elaborated on in Section 2.4, to either adjust or explain the economic value of urban green areas in Amsterdam. 
+
 ## 2.4 Analysis
 
 ```{=latex}
-\begin{table}[]
+\begin{table*}[b]
 \centering
-\caption{Included variables}
-\begin{tabular}{@{}lll@{}}
+\caption{Descriptive Statistics of Property, Public Amenity and Greenness Characteristics of Properties in  Amsterdam.}
+\begin{tabular}{@{}llll@{}}
 \toprule
-Variable            & Mean (n = 1719) & SD \\ \midrule
-Living area (m2)    & 105.7           & 71.0               \\
-Bedroom (N)         & 2.5             & 1.4                \\
-Bathroom (N)        & 1.1             & 0.7                \\
-House age (Years)   & 76.9            & 63.2               \\
-Train distance (m)  & 1703.7          & 958.2              \\
-Metro distance (m)  & 1303.2          & 951.8              \\
-Tram distance (m)   & 689.1           & 1024.7             \\
-NDVI 300m range     & 0.212           & 0.069              \\
-Centre distance (m) & 3770.5          & 2288.1             \\
-Zuid distance (m)   & 4659.2          & 2228.3             \\
-School distance (m) & 268.3           & 183.8              \\
-Shops distance (m)  & 266.7           & 206.9              \\
-                    &                 &                    \\ \bottomrule
-
+\textbf{Independent Variable}      & \textbf{Mean} & \textbf{SD} & \textbf{Description}                        \\ \midrule
+\multicolumn{4}{c}{\textbf{Summary Statistics (N = 1,719)}}                                                    \\ \midrule
+\textbf{Property Characteristics}  &               &             &                                             \\
+Living Area (m2)                   & 105.7         & 71.0        & Size of livable area of the property        \\
+Number of Bedrooms                 & 2.5           & 1.4         & Number of bedrooms of the property          \\
+Number of Bathrooms                & 1.1           & 0.7         & Number of bathrooms of the property         \\
+House Age (years)                  & 76.9          & 63.2        & Age of the property in 2023                 \\
+\textbf{Design}                    &               &             &                                             \\
+NDVI100                            & 0.200         & 0.073       & Average NDVI at 100 m around property       \\
+NDVI300                            & 0.212         & 0.069       & Average NDVI at 300 m around property       \\
+NDVI500                            & 0.216         & 0.067       & Average NDVI at 500 m around property       \\
+\textbf{Transit Distance}          &               &             &                                             \\
+Distance to Train Station (m)      & 1703.7        & 958.2       & Euclidean distance to nearest train station \\
+Distance to Tram Station (m)       & 689.1         & 1024.7      & Euclidean distance to nearest tram station  \\
+Distance to Metro Station (m)      & 1303.2        & 951.8       & Euclidean distance to nearest metro station \\
+\textbf{Destination Accessibility} &               &             &                                             \\
+Distance to City Center (m)        & 3770.5        & 2288.1      & Euclidean distance to city center           \\
+Distance to Business District (m) & 4659.2 & 2228.3 & Euclidean distance to business district \\
+Distance to School (m)             & 268.3         & 183.8       & Euclidean distance to nearest school        \\
+Distance to Convenience Stores (m) & 266.7         & 206.9       & Euclidean distance to nearest store         \\ \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 ```
 
 
