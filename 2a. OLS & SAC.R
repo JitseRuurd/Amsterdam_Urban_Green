@@ -57,6 +57,30 @@ plot(mc_global_knn, xlab = "Dependent variable (price per squared meter)")
 mc_global_knn
 #there is significant spatial autocorrelation
 
+#convert to ggplot object for paper
+as.data.frame(mc_global_knn$res)  %>%
+  ggplot(aes(x = mc_global_knn$res)) + 
+  geom_vline(xintercept = 0.5902364) + 
+  geom_density() + 
+  xlim(c(-0.05, 0.8)) + 
+  labs(title = "Density Plot of Permutation Outcomes",
+       subtitle = "Monte-Carlo Simulation of Moran's I",
+       y = 'Density', 
+       x = 'House Price (per m²)') + 
+  theme(panel.grid.major=element_blank(), 
+        panel.grid.minor=element_blank(), 
+        panel.border=element_blank(), 
+        panel.background = element_blank(),
+        axis.line=element_line(),         
+        text=element_text(family = "Times"), 
+        legend.title=element_blank(),
+        axis.text.y=element_text(size = 12),
+        axis.text.x=element_text(size = 12),
+        plot.title = element_text(face = 'bold', hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+  
+#ggsave('Density_Plot.png', height = 3)
+
 #set equation for regression models
 equation <- price_m2 ~ bedroom + bathroom + living_area + house_age + tram_dist + metro_dist + train_dist + ndvi300 + centre_dist + zuid_dist + shops_dist + school_dist
 
