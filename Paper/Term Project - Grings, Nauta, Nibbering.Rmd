@@ -1,0 +1,277 @@
+---
+title: "Estimating the Effect of Urban Green Spaces on Residential House Prices in Amsterdam"
+subtitle: "An Empirical Study using Remote Sensing and Geographically Weighted Regression" 
+author: 
+  - Yúri Grings
+  - Jitse Ruurd Nauta
+  - Thomas Nibbering
+
+date: "2023-04-14"
+
+output: 
+    pdf_document:
+        extra_dependencies: ["float", "booktabs"]
+        latex_engine: xelatex
+        pandoc_args: [
+      "-V", "classoption=twocolumn"
+    ]
+
+subparagraph: yes
+header-includes: |
+  \usepackage{titlesec}
+  \titlespacing{\section}{0pt}{10pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \titlespacing{\subsection}{0pt}{4pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \titlespacing{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+  \usepackage{geometry}
+  \geometry{left=1.31cm,right=1.31cm}
+mainfont: Cambria
+indent: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=30),tidy=TRUE)
+```
+
+# 1. Introduction
+  Green spaces play an important role in urban ecosystems. As a natural purifier for cities, these areas help control soil erosion [1], improve air quality [2, 3], reduce the urban heat island effect [4–6] and are considered to be aesthetically pleasing [7]. Moreover, green areas in cities are shown to provide notable improvements in residents’ physical and mental wellbeing [8, 9]. As the benefits of greenness in urban areas are increasingly recognised, numerous cities have developed urban greening programs to expand parks, build green roofs or plant more trees [10–12]. However, evaluating the effects of these initiatives to justify their costs remains a challenge, partly due to data sparsity. 
+
+  A review of literature revealed several studies that aimed to examine the effect of urban green spaces on residential house prices [13–19]. Often these studies adopted a hedonic pricing approach to estimate the economic value that individuals place on particular property characteristics, as reflected in the real-estate prices [14, 15]. However, most literature only focused on the distance to urban green areas as a valuation indicator [20, 21]. Only a few studies considered a more comprehensive appreciation of greenness in cities by employing vegetation indices and the interaction with property and public amenities [16, 17, 22, 23]. 
+
+  Among the literature that explored the property value premium of urban green spaces more exhaustive, most adopted the normalised difference vegetation index (NDVI) [16, 22, 23]. Here, the relative abundance of vegetation was measured across varying buffer distances using remote sensing systems with various spatial resolutions. Moreover, most of these studies also considered the interaction with residential and public amenities, such as the number of rooms or proximity to convenience stores [16, 23]. However, these analyses were mainly performed in cities with conservative greening programs in place [23]. Lastly, the adoption of NDVI for identifying (urban) green spaces is often criticised due to its sensitivity to varying spatial scales and inability to differentiate between vegetation types [24]. Nonetheless, the index is widely accepted and can be considered almost a standard approach [25, 26]. 
+
+  Based on the examined literature, a hedonic pricing approach in combination with NDVI and the interaction with particular amenities emerges as an effective method to estimate the effect of urban green spaces on residential house prices. Given the limited literature available on property value premiums associated with greenness exposure in cities with more progressive urban greening programs, this study aims to answer the research question of what the economic value of urban green spaces is in the city of Amsterdam, as reflected in the real-estate prices of 2023. 
+
+# 2. Methods
+## 2.1 Study Area
+  The geographical scope in this study concentrated on the city of Amsterdam, as presented in Figure 1. The city is situated in the Western part of the Netherlands and home to almost 880,000 residents [27], occupying a space of 219.3 km2  [28]. Surrounding the residential areas, the vast majority of land is occupied with vegetation [29]. Moreover, the municipality has progressive urban greening programs in place, stimulating and obligating residents and city districts to participate in greening initiatives [12]. As a result, these policies aimed at expanding urban green spaces may have the potential to increase nearby housing premiums.  
+
+```{=latex}
+\begin{figure}[]
+  \centering
+  \includegraphics[width=\linewidth]{figures/study_area.png}
+  \caption{Overview of the study area.}
+\end{figure}
+```
+
+## 2.2 Data Extraction
+  A total of 1,719 property listings were obtained from Funda.nl, a Dutch online real-estate platform [30]. Here, data included the sale price and property characteristics of homes in Amsterdam listed on the platform on 31 March 2023. Moreover, information about public amenities in Amsterdam were obtained from a variety of sources, including ArcGIS [31], OpenStreetMap.org [32, 33] and the municipality of Amsterdam [34]. Selection of public amenities, used as controlling variables, were based on applicable literature, as presented in Table 1. Adjusting for these variables was done to limit the effect of potential confounders on the association of interest. Finally, remote sensing images were obtained from Sentinel-2 in August 2022 [35]. This allowed on the capitalisation of high greenness levels in that period, leading to improved differentiation between green and urban areas. 
+
+## 2.3 Data Enrichment
+  To examine the economic value of urban green spaces as reflected in the real-estate prices, coordinates for each property were obtained using geocoding and transformed into a single coordinate reference system, i.e. EPSG 28992, to ensure consistency and accuracy of the analysis. Exclusion criteria were in place for properties for which coordinates could not be obtained, i.e. future housing projects. Moreover, straight line distances from each property to the nearest public amenities were enumerated using the nearest neighbour algorithm in combination with Euclidean distance. This is a common approach to adjust for the implicit premium of local public amenities on house prices [36]. 
+
+  Furthermore, urban green vegetation was measured using NDVI. This vegetation index was derived from the Sentinel-2 satellite, based on Equation 1. Here, N and R refer to the spectral reflectance measurements obtained in the red and near-infrared regions, respectively. In general, the index ranges from -1.0 to 1.0 with positive values indicating greenness. The usage of this system provided more accurate images for identifying green spaces, i.e. 10x10m, compared to the moderate resolution of Landsat, i.e. 30x30m [37].  
+
+$$ NDVI= \frac{(N - R)}{(N + R)} $$
+  Surrounding the residential properties, mean values of NDVI were obtained at varying spatial scales, i.e. 100, 300 and 500m. In doing so, the variation of greenness around the property could be included in the analysis. Moreover, the usage of these thresholds ensured that the results were less vulnerable to scaling effects given the resolution of the data [37]. Finally, based on the extraction and enhancement of data, several independent variables were identified and constructed, as presented in Table 1. These variables were included in the hedonic pricing model, as will be elaborated on in Section 2.4, to either adjust or explain the economic value of urban green areas in Amsterdam. 
+
+```{=latex}
+\begin{table*}[]
+\centering
+\caption{Descriptive Statistics of Property, Public Amenity and Greenness Characteristics of Properties in  Amsterdam.}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Independent Variable}      & \textbf{Mean} & \textbf{SD} & \textbf{Description}                        \\ \midrule
+\multicolumn{4}{c}{\textbf{Summary Statistics (N = 1,719)}}                                                    \\ \midrule
+\textbf{Property Characteristics$^1$}  &               &             &                                             \\
+Living Area (m2) [38]                   & 105.7         & 71.0        & Size of livable area of the property        \\
+Number of Bedrooms [38, 39]                & 2.5           & 1.4         & Number of bedrooms of the property          \\
+Number of Bathrooms [23]               & 1.1           & 0.7         & Number of bathrooms of the property         \\
+House Age (years) [23, 38]            & 76.9          & 63.2        & Age of the property in 2023                 \\
+\textbf{Design$^2$}                    &               &             &                                             \\
+NDVI$_{100}$ [36, 39, 40]                & 0.200         & 0.073       & Average NDVI at 100 m around property       \\
+NDVI$_{300}$ [36, 39, 40]                & 0.212         & 0.069       & Average NDVI at 300 m around property       \\
+NDVI$_{500}$ [36, 39, 40]               & 0.216         & 0.067       & Average NDVI at 500 m around property       \\
+\textbf{Transit Distance$^{3,4,5}$} &               &             &                                             \\
+Distance to Train Station (m) [22]     & 1703.7        & 958.2       & Euclidean distance to nearest train station \\
+Distance to Tram Station (m) [22]      & 689.1         & 1024.7      & Euclidean distance to nearest tram station  \\
+Distance to Metro Station (m) [23]      & 1303.2        & 951.8       & Euclidean distance to nearest metro station \\
+\textbf{Destination Accessibility$^4$} &               &             &                                             \\
+Distance to City Center (m) [38]       & 3770.5        & 2288.1      & Euclidean distance to city center           \\
+Distance to Business District (m) [38] & 4659.2 & 2228.3 & Euclidean distance to business district \\
+Distance to School (m) [23]            & 268.3         & 183.8       & Euclidean distance to nearest school        \\
+Distance to Convenience Stores (m) [38] & 266.7         & 206.9       & Euclidean distance to nearest store         \\ \bottomrule
+\multicolumn{4}{l}{Sources: $^1$Funda.nl, $^2$Sentinel-2, $^3$ArcGIS, $^4$OpenStreetMap.org, and $^5$Amsterdam Municipality} 
+\end{tabular} 
+\end{table*}
+```
+
+## 2.4 Hedonic Pricing Models
+  Two forms of the hedonic pricing model were employed to examine the effect of urban green spaces on housing prices per square meter, namely ordinary least squares (OLS) and geographically weighted regression (GWR). In the models, the relation of interest was adjusted for using property characteristics, transit distances and destination accessibility. Here, the usage of OLS was mainly related to its superior interpretability [40]. However, the Durbin-Watson test and Variance Inflation Factor (VIF) revealed that observations were not independent and indicated some collinearity, respectively. Hence, violating two model assumptions [41]. As a result, variables NDVI$_{100}$ and NDVI$_{500}$ were excluded from the analysis, as these resulted in considerable collinearity (VIF > 5). Moreover, Moran’s I indicated the presence of spatial dependency (0.590, p < 0.05), as presented in Figure 2. 
+
+```{=latex}
+\begin{figure}[]
+  \centering
+  \includegraphics[width=\linewidth]{figures/moranImc.png}
+  \caption{Density plot of Monte-Carlo Moran's I Permutation Outcomes.}
+\end{figure}
+```
+
+  Furthermore, similar studies found evidence for the existence of non-stationarity in both house prices and green spaces [39, 42]. Hence, a local regression approach, i.e. GWR with an adaptive bi-square kernel, was employed to account for both the spatial dependence and non-stationarity in the data. Here, a golden search algorithm was used to obtain the kernel bandwidth, as data was not uniformly distributed across space [43]. Doing so, provided estimates for each location in the study area. Finally, an overview of the scripts used throughout this study may be found on: [GitHub](https://github.com/JitseRuurd/Amsterdam_Urban_Green).
+
+# 3. Results and Discussion
+  The results showed that urban green spaces provide significant economic value, indicated by their positive association with residential property prices in the local regression model. However, this association was not consistent across all locations, as presented in Figure 3. Since the local model captured both the spatial dependence and non-stationarity present in the data, this section primarily focuses on the results of this model. A detailed overview of both models is presented in Appendix I. 
+
+  Results of the local regression revealed that urban green spaces were significantly associated with residential house prices at a 300m spatial scale (p < 0.05). Here, property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. These results align with previous studies, highlighting the non-stationary nature of the association of interest [23, 36, 39, 40], as illustrated in Appendix II. As a result, the findings of this study provide empirical evidence of the capitalisation of greenness characteristics in residential property prices. 
+
+  Moreover, the results indicated a positive association between the extent of urban green areas and residential property premiums, i.e. listings located near parks indicated higher premiums compared to smaller areas of greenness. One explanation for this finding is the direct-use value placed on these sites [23]. In other words, more extensive green areas might attract more residents to benefit from the perceived value of greenness, prompting more people to purchase houses nearby [44].
+
+
+  Finally, limitations of this study were three-fold. First, distinctions between vegetation types were not considered. However, it was demonstrated to affect the scope and magnitude on house prices differently [45]. Second, the presence of property and neighbourhood characteristics that were unobserved but associated with urban green space and/or house prices may have biased the estimations. Lastly, the temporal dimension was not considered in this study. Hence, this may limit the generalisability of the study as the dynamic nature of the data might not be captured.
+
+```{=latex}
+\begin{figure}[]
+  \centering
+  \includegraphics[width=\linewidth]{figures/Economic_Value_Urban_Green_clip.png}
+  \caption{Overview of Statistically Significant Urban Green Space Coefficients, i.e. NDVI at a 300m Spatial Scale, (p < 0.05) in Amsterdam.}
+\end{figure}
+```
+
+# 4. Conclusion
+  This study aimed to examine the economic value of urban green spaces in Amsterdam, as reflected in the real-estate prices of 2023. Here, property characteristics, public amenities and greenness measurements were obtained from a variety of sources. In line with topical literature, independent variables were identified and constructed to either adjust or explain the economic value of urban green spaces. In doing so, the local hedonic pricing model revealed that urban green spaces provided significant economic value. However, this association was not consistent across all locations, as the property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. The main theoretical explanation for this range might be related to the direct-use value placed on these areas. As a result, the outcomes of this study provide empirical evidence for the capitalisation of greenness characteristics in residential real-estate.    
+
+
+# 5. References
+```{=latex}
+\begin{enumerate}
+\item Morancho AB (2003) A hedonic valuation of urban green areas. Landsc Urban Plan 66:35–41. https://doi.org/10.1016/S0169-2046(03)00093-8
+
+\item Selmi W, Weber C, Rivière E, et al (2016) Air pollution removal by trees in public green spaces in Strasbourg city, France. Urban For Urban Green 17:192–201. https://doi.org/10.1016/j.ufug.2016.04.010
+
+\item Georgi JN, Dimitriou D (2010) The contribution of urban green spaces to the improvement of environment in cities: Case study of Chania, Greece. Build Environ 45:1401–1414. https://doi.org/10.1016/j.buildenv.2009.12.003
+
+\item Wang C, Ren Z, Dong Y, et al (2022) Efficient cooling of cities at global scale using urban green space to mitigate urban heat island effects in different climatic regions. Urban For Urban Green 74:127635. https://doi.org/10.1016/j.ufug.2022.127635
+
+\item Shishegar N (2014) The Impacts of Green Areas on Mitigating Urban Heat Island Effect. The International Journal of Environmental Sustainability 9:119–130. https://doi.org/10.18848/2325-1077/CGP/v09i01/55081
+
+\item Huang M, Cui P, He X (2018) Study of the Cooling Effects of Urban Green Space in Harbin in Terms of Reducing the Heat Island Effect. Sustainability 10:1101. https://doi.org/10.3390/su10041101
+
+\item Jim CY, Chen WY (2006) Perception and Attitude of Residents Toward Urban Green Spaces in Guangzhou (China). Environ Manage 38:338–349. https://doi.org/10.1007/s00267-005-0166-6
+
+\item Groenewegen PP, van den Berg AE, de Vries S, Verheij RA (2006) Vitamin G: effects of green space on health, well-being, and social safety. BMC Public Health 6:149. https://doi.org/10.1186/1471-2458-6-149
+
+\item Ayala-Azcárraga C, Diaz D, Zambrano L (2019) Characteristics of urban parks and their relation to user well-being. Landsc Urban Plan 189:27–35. https://doi.org/10.1016/j.landurbplan.2019.04.005
+
+\item Department of Environmental Protection (2021) NYC Green Infrastructure. New York City
+
+\item Lachmund J (2013) Greening Berlin. The MIT Press
+
+\item Department of Planning and Sustainability (2020) Amsterdam Green Infrastructure Vision 2050. Amsterdam
+
+\item Conway D, Li CQ, Wolch J, et al (2010) A Spatial Autocorrelation Approach for Examining the Effects of Urban Greenspace on Residential Property Values. The Journal of Real Estate Finance and Economics 41:150–169. https://doi.org/10.1007/s11146-008-9159-6
+\item Saphores J-D, Li W (2012) Estimating the value of urban green areas: A hedonic pricing analysis of the single family housing market in Los Angeles, CA. Landsc Urban Plan 104:373–387. https://doi.org/10.1016/j.landurbplan.2011.11.012
+
+\item Panduro TE, Veie KL (2013) Classification and valuation of urban green spaces—A hedonic house price valuation. Landsc Urban Plan 120:119–128. https://doi.org/10.1016/j.landurbplan.2013.08.009
+
+\item Holt JR, Borsuk ME (2020) Using Zillow data to value green space amenities at the neighborhood scale. Urban For Urban Green 56:126794. https://doi.org/10.1016/j.ufug.2020.126794
+
+\item Zambrano-Monserrate MA, Ruano MA, Yoong-Parraga C, Silva CA (2021) Urban green spaces and housing prices in developing countries: A Two-stage quantile spatial regression analysis. For Policy Econ 125:102420. https://doi.org/10.1016/j.forpol.2021.102420
+
+\item Sander H, Polasky S, Haight RG (2010) The value of urban tree cover: A hedonic property price model in Ramsey and Dakota Counties, Minnesota, USA. Ecological Economics 69:1646–1656. https://doi.org/10.1016/j.ecolecon.2010.03.011
+
+\item Sander HA, Haight RG (2012) Estimating the economic value of cultural ecosystem services in an urbanizing area using hedonic pricing. J Environ Manage 113:194–205. https://doi.org/10.1016/j.jenvman.2012.08.031
+
+\item Czembrowski P, Kronenberg J (2016) Hedonic pricing and different urban green space types and sizes: Insights into the discussion on valuing ecosystem services. Landsc Urban Plan 146:11–19. https://doi.org/10.1016/j.landurbplan.2015.10.005
+
+\item Anderson ST, West SE (2006) Open space, residential property values, and spatial context. Reg Sci Urban Econ 36:773–789. https://doi.org/10.1016/j.regsciurbeco.2006.03.007
+
+\item Li W, Saphores J-DM, Gillespie TW (2015) A comparison of the economic benefits of urban green spaces estimated with NDVI and with high-resolution land cover data. Landsc Urban Plan 133:105–117. https://doi.org/10.1016/j.landurbplan.2014.09.013
+
+\item Mei Y, Zhao X, Lin L, Gao L (2018) Capitalization of Urban Green Vegetation in a Housing Market with Poor Environmental Quality: Evidence from Beijing. J Urban Plan Dev 144:. https://doi.org/10.1061/(ASCE)UP.1943-5444.0000458
+
+\item Martinez A de la I, Labib SM (2023) Demystifying normalized difference vegetation index (NDVI) for greenness exposure assessments and policy interventions in urban greening. Environ Res 220:115155. https://doi.org/10.1016/j.envres.2022.115155
+
+\item Rhew IC, Vander Stoep A, Kearney A, et al (2011) Validation of the Normalized Difference Vegetation Index as a Measure of Neighborhood Greenness. Ann Epidemiol 21:946–952. https://doi.org/10.1016/j.annepidem.2011.09.001
+
+\item Jimenez RB, Lane KJ, Hutyra LR, Fabian MP (2022) Spatial resolution of Normalized Difference Vegetation Index and greenness exposure misclassification in an urban cohort. J Expo Sci Environ Epidemiol 32:213–222. https://doi.org/10.1038/s41370-022-00409-w
+
+\item CBS Statline (2022) Inwoners per Gemeente. In: Centraal Bureau voor de Statistiek. https://www.cbs.nl/nl-nl/visualisaties/dashboard-bevolking/regionaal/inwoners. Accessed 6 Apr 2023
+
+\item CBS Statline (2022) Kerncijfers wijken en buurten 2022. In: Centraal Bureau voor de Statistiek. https://opendata.cbs.nl. Accessed 6 Apr 2023
+
+\item Department of Planning and Sustainability (2018) Evaluatie project Groen in de buurt. Amsterdam
+
+\item Funda (2023) Zoek huizen en appartementen te koop in Nederland. https://www.funda.nl. Accessed 6 Apr 2023
+
+\item ArcGIS (2021) Stations in Nederland. https://www.arcgis.com/home. Accessed 6 Apr 2023
+
+\item OpenStreetMap Contributors (2023) Convenience Store Amenities. In: OpenStreetMap.org
+
+\item OpenStreetMap Contributors (2023) School Amenities. In: OpenStreetMap.org
+
+\item Municipality of Amsterdam (2023) Datacatalogus. https://data.amsterdam.nl/datasets/zoek/. Accessed 6 Apr 2023
+
+\item European Space Agency (2022) Sentinel-2 Level-2A. https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a. Accessed 6 Apr 2023
+
+\item Daams MN, Sijtsma FJ, Veneri P (2019) Mixed monetary and non-monetary valuation of attractive urban green space: A case study using Amsterdam house prices. Ecological Economics 166:106430. https://doi.org/10.1016/j.ecolecon.2019.106430
+
+\item Labib SM, Lindley S, Huck JJ (2021) Estimating multiple greenspace exposure types and their associations with neighbourhood premature mortality: A socioecological study. Science of The Total Environment 789:147919. https://doi.org/10.1016/j.scitotenv.2021.147919
+
+\item Chen Y, Jones CA, Dunse NA, et al (2023) Housing Prices and the Characteristics of Nearby Green Space: Does Landscape Pattern Index Matter? Evidence from Metropolitan Area. Land (Basel) 12:496. https://doi.org/10.3390/land12020496
+
+\item Zhang S, Wang L, Lu F (2019) Exploring Housing Rent by Mixed Geographically Weighted Regression: A Case Study in Nanjing. ISPRS Int J Geoinf 8:431. https://doi.org/10.3390/ijgi8100431
+
+\item Sisman S, Aydinoglu AC (2022) A modelling approach with geographically weighted regression methods for determining geographic variation and influencing factors in housing price: A case in Istanbul. Land use policy 119:106183. https://doi.org/10.1016/j.landusepol.2022.106183
+
+\item Kasmaoui K (2019) Linear Regression. In: Global Encyclopedia of Public Administration, Public Policy, and Governance. Springer International Publishing, Cham, pp 1–11
+
+\item Wu C, Du Y, Li S, et al (2022) Does visual contact with green space impact housing pricesʔ An integrated approach of machine learning and hedonic modeling based on the perception of green space. Land use policy 115:106048. https://doi.org/10.1016/j.landusepol.2022.106048
+
+\item Suryowati K, Ranggo MO, Bekti RD, et al (2021) Geographically Weighted Regression using Fixed and Adaptive Gaussian Kernel Weighting for Maternal Mortality Rate Analysis. In: 2021 3rd International Conference on Electronics Representation and Algorithm (ICERA). IEEE, pp 115–120
+
+\item Lin I-H, Wu C, De Sousa C (2013) Examining the economic impact of park facilities on neighboring residential property values. Applied Geography 45:322–331. https://doi.org/10.1016/j.apgeog.2013.10.003
+
+\item Crompton JL (2001) The Impact of Parks on Property Values: A Review of the Empirical Evidence. J Leis Res 33:1–31. https://doi.org/10.1080/00222216.2001.11949928
+\end{enumerate}
+```
+\onecolumn \newpage
+
+# Appendix I
+
+```{=latex}
+\begin{table*}[ht]
+\centering
+\caption{Coefficients and Statistical Significance of the Ordinary Least Squares and Geographically Weighted Regression Models.}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Independent Variable} &
+  \textbf{Coef.} &
+  \textbf{Min. Coef.} &
+  \textbf{Median Coef.} &
+  \textbf{Max. Coef.} \\ \midrule
+                                     & OLS$^1$ &           & GWR$^{1,2}$ &           \\ \midrule
+\textbf{Property Characteristics}    &            &           &         &           \\
+Living Area (m2)                     & 4.7**      & -45.7     & -5.3    & 28.4      \\
+Number of Bedrooms                   & -329.6**   & -1384.2   & -136.0  & 957.8     \\
+Number of Bathrooms                  & 318.3**    & -1206.8   & 248.3   & 2,385.9   \\
+House Age (years)                    & 1.3**      & -121.1    & -0.6    & 74.1      \\
+\textbf{Design}                      &            &           &         &           \\
+NDVI$_{300}$                              & -1,674.1** & -82,657.5 & 262.5   & 125,978.4 \\
+\textbf{Transit Distance}            &            &           &         &           \\
+Distance to Train Station (m)        & -0.08      & -79.7     & 1.0     & 297.5     \\
+Distance to Tram Station (m)         & 0.4**      & -38.5     & 0.2     & 45.8      \\
+Distance to Metro Station (m)        & 0.5**      & -66.0     & 0.5     & 39.1      \\
+\textbf{Destination Accessibility}   &            &           &         &           \\
+Distance to City Center (m)          & -0.5**     & -495.3    & -1.2    & 124.4     \\
+Distance to Business District   (m)  & -0.5**     & -145.6    & -0.02   & 162.1     \\
+Distance to School (m)               & 0.3        & -21.5     & -0.6    & 9.4       \\
+Distance to Convenience Stores   (m) & 1.2**      & -15.4     & 0.2     & 18.1      \\ \midrule
+Akaike Information Criterion   (AIC) & 30,487     &           & 29,720  &           \\ \midrule
+\multicolumn{5}{l}{** Significant at p \textless 0.05}                              \\
+\multicolumn{5}{l}{$^1$ Statistical significance levels are only reported for the global OLS model,} \\
+\multicolumn{5}{l}{as p-values could not be easily presented for GWR due to its local approach.} \\
+\multicolumn{5}{l}{$^2$ Bandwidth of adjusted kernel corresponds to 67.}              
+\end{tabular}
+\end{table*}
+```
+
+\newpage
+
+# Appendix II
+
+```{=latex}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/NDVI_clip.png}
+  \caption{Overview of Greenness Measurements in the Form of NDVI across the City of Amsterdam.}
+\end{figure}
+```
