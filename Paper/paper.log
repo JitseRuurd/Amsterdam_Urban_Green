@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  11 APR 2023 11:43
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  11 APR 2023 14:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -490,34 +490,34 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 ) (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 89.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/b/n on input line 89.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/b/n on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 89.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 79.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/b/n on input line 89.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/b/n on input line 79.
 
 Package fontspec Info: latinmodern-math scale = 1.083052173574405.
 
@@ -543,7 +543,7 @@ Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.83054pt on input line 89.
+(Font)              scaled to size 10.83054pt on input line 79.
 
 Package fontspec Info: latinmodern-math scale = 1.083052173574405.
 
@@ -575,15 +575,15 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.83054pt on input line 89.
+(Font)              scaled to size 10.83054pt on input line 79.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 89.
+(Font)              `operators' in the math version `normal' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 89.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 79.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 89.
+(Font)              `operators' in the math version `bold' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 89.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 79.
 
 Package fontspec Info: latinmodern-math scale = 1.083052173574405.
 
@@ -662,13 +662,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 89.
+(Font)              `symbols' in the math version `normal' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 89.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 79.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 89.
+(Font)              `symbols' in the math version `bold' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 89.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 79.
 
 Package fontspec Info: latinmodern-math scale = 1.083052173574405.
 
@@ -729,13 +729,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =6.49832pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 89.
+(Font)              `largesymbols' in the math version `normal' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 89.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 79.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 89.
+(Font)              `largesymbols' in the math version `bold' on input line 79.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 89.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 79.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -770,125 +770,560 @@ LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 89.
+Package hyperref Info: Link coloring OFF on input line 79.
 (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
 LaTeX Font Info:    Font shape `TU/Cambria(0)/m/n' will be
-(Font)              scaled to size 17.28pt on input line 91.
+(Font)              scaled to size 17.28pt on input line 81.
 LaTeX Font Info:    Font shape `TU/Cambria(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 91.
+(Font)              scaled to size 12.0pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.99664pt on input line 91.
+(Font)              scaled to size 12.99664pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.66443pt on input line 91.
+(Font)              scaled to size 8.66443pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.49832pt on input line 91.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 91.
+(Font)              scaled to size 6.49832pt on input line 81.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 81.
 (c:/Users/jitse/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.99792pt on input line 91.
+(Font)              scaled to size 12.99792pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.66528pt on input line 91.
+(Font)              scaled to size 8.66528pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.49896pt on input line 91.
+(Font)              scaled to size 6.49896pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 12.99536pt on input line 91.
+(Font)              scaled to size 12.99536pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.66357pt on input line 91.
+(Font)              scaled to size 8.66357pt on input line 81.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.49768pt on input line 91.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 91.
+(Font)              scaled to size 6.49768pt on input line 81.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 81.
 (c:/Users/jitse/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 91.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 81.
 (c:/Users/jitse/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `TU/Cambria(0)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 93.
+(Font)              scaled to size 14.4pt on input line 83.
 LaTeX Font Info:    Font shape `TU/Cambria(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 93.
+(Font)              scaled to size 14.4pt on input line 83.
+
+Underfull \hbox (badness 1147) in paragraph at lines 123--132
+[]\TU/Cambria(0)/m/n/10 Based on the examined literature, a hedonic pricing ap-
+ []
+
 LaTeX Font Info:    Font shape `TU/Cambria(0)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 147.
+(Font)              scaled to size 12.0pt on input line 137.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 160.
+               Default added (so using `htbp') on input line 150.
 
 File: figures/study_area.png Graphic file (type bmp)
 <figures/study_area.png>
+
+Underfull \hbox (badness 4242) in paragraph at lines 159--172
+[]\TU/Cambria(0)/m/n/10 A total of 1,719 property listings were obtained from
+ []
+
+
+Underfull \vbox (badness 1117) has occurred while \output is active []
+
 [1
 
 
 ]
-Underfull \hbox (badness 1715) in paragraph at lines 197--205
-[]\TU/Cambria(0)/m/n/10 Furthermore, urban green vegetation was measured using
- []
-
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.58138pt on input line 206.
+(Font)              scaled to size 7.58138pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.41527pt on input line 206.
+(Font)              scaled to size 5.41527pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.8316pt on input line 206.
+(Font)              scaled to size 10.8316pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.58212pt on input line 206.
+(Font)              scaled to size 7.58212pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.4158pt on input line 206.
+(Font)              scaled to size 5.4158pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.82947pt on input line 206.
+(Font)              scaled to size 10.82947pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.58063pt on input line 206.
+(Font)              scaled to size 7.58063pt on input line 196.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.41473pt on input line 206.
+(Font)              scaled to size 5.41473pt on input line 196.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 218.
+               Default added (so using `tbp') on input line 208.
 
 LaTeX Font Info:    Font shape `TU/Cambria(0)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 223.
+(Font)              scaled to size 10.0pt on input line 213.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 264.
+               Default added (so using `htbp') on input line 255.
 
 File: figures/moranImc.png Graphic file (type bmp)
 <figures/moranImc.png>
-
-Underfull \vbox (badness 3724) has occurred while \output is active []
-
 [2]
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 322.
-
-File: figures/Economic_Value_Urban_Green_clip.png Graphic file (type bmp)
-<figures/Economic_Value_Urban_Green_clip.png>
-[3]
-Underfull \hbox (badness 1137) in paragraph at lines 331--345
-\TU/Cambria(0)/m/n/10 green spaces in Amsterdam, as reflected in the real-estate
+Underfull \hbox (badness 1173) in paragraph at lines 284--293
+\TU/Cambria(0)/m/n/10 spaces were significantly associated with residential house
  []
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 352.
+               Default added (so using `htbp') on input line 313.
 
-[4
+File: figures/Economic_Value_Urban_Green_clip.png Graphic file (type bmp)
+<figures/Economic_Value_Urban_Green_clip.png>
 
-] [5] (./paper.aux)
+Underfull \hbox (badness 1137) in paragraph at lines 322--336
+\TU/Cambria(0)/m/n/10 green spaces in Amsterdam, as reflected in the real-estate
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 341--342
+[]\TU/Cambria(0)/m/n/10 Morancho AB (2003) A hedonic valuation of ur-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 341--342
+\TU/Cambria(0)/m/n/10 ban green areas. Landsc Urban Plan 66:35–41.
+ []
+
+
+Underfull \hbox (badness 2326) in paragraph at lines 343--344
+[]\TU/Cambria(0)/m/n/10 Selmi W, Weber C, Rivière E, et al (2016) Air pollu-
+ []
+
+
+Underfull \hbox (badness 3449) in paragraph at lines 347--348
+[]\TU/Cambria(0)/m/n/10 Wang C, Ren Z, Dong Y, et al (2022) Efficient cool-
+ []
+
+
+Underfull \hbox (badness 2452) in paragraph at lines 347--348
+\TU/Cambria(0)/m/n/10 ing of cities at global scale using urban green space
+ []
+
+
+Underfull \hbox (badness 3009) in paragraph at lines 347--348
+\TU/Cambria(0)/m/n/10 to mitigate urban heat island effects in different cli-
+ []
+
+
+Underfull \hbox (badness 4686) in paragraph at lines 347--348
+\TU/Cambria(0)/m/n/10 matic regions. Urban For Urban Green 74:127635.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
+[]\TU/Cambria(0)/m/n/10 Shishegar N (2014) The Impacts of Green Areas
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
+\TU/Cambria(0)/m/n/10 on Mitigating Urban Heat Island Effect. The In-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
+\TU/Cambria(0)/m/n/10 ternational Journal of Environmental Sustainabil-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
+\TU/Cambria(0)/m/n/10 ity 9:119–130. https://doi.org/10.18848/2325-
+ []
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 351--352
+\TU/Cambria(0)/m/n/10 ducing the Heat Island Effect. Sustainability 10:1101.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--354
+[]\TU/Cambria(0)/m/n/10 Jim CY, Chen WY (2006) Perception and Atti-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--354
+\TU/Cambria(0)/m/n/10 tude of Residents Toward Urban Green Spaces in
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--354
+\TU/Cambria(0)/m/n/10 Guangzhou (China). Environ Manage 38:338–349.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
+[]\TU/Cambria(0)/m/n/10 Ayala-Azcárraga C, Diaz D, Zambrano L (2019)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
+\TU/Cambria(0)/m/n/10 Characteristics of urban parks and their relation
+ []
+
+
+Underfull \hbox (badness 5217) in paragraph at lines 357--358
+\TU/Cambria(0)/m/n/10 to user well-being. Landsc Urban Plan 189:27–35.
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 359--360
+[]\TU/Cambria(0)/m/n/10 Department of Environmental Protection (2021) NYC
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
+[]\TU/Cambria(0)/m/n/10 Saphores J-D, Li W (2012) Estimating the value
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
+\TU/Cambria(0)/m/n/10 of urban green areas: A hedonic pricing anal-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
+\TU/Cambria(0)/m/n/10 ysis of the single family housing market in Los
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
+\TU/Cambria(0)/m/n/10 Angeles, CA. Landsc Urban Plan 104:373–387.
+ []
+
+
+Underfull \hbox (badness 7064) in paragraph at lines 368--369
+[]\TU/Cambria(0)/m/n/10 Panduro TE, Veie KL (2013) Classification and val-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--369
+\TU/Cambria(0)/m/n/10 uation of urban green spaces—A hedonic house
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--369
+\TU/Cambria(0)/m/n/10 price valuation. Landsc Urban Plan 120:119–128.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 370--371
+[]\TU/Cambria(0)/m/n/10 Holt JR, Borsuk ME (2020) Using Zillow data
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 370--371
+\TU/Cambria(0)/m/n/10 to value green space amenities at the neighbor-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 370--371
+\TU/Cambria(0)/m/n/10 hood scale. Urban For Urban Green 56:126794.
+ []
+
+
+Underfull \hbox (badness 5446) in paragraph at lines 372--373
+\TU/Cambria(0)/m/n/10 in developing countries: A Two-stage quantile spa-
+ []
+
+
+Underfull \hbox (badness 1281) in paragraph at lines 372--373
+\TU/Cambria(0)/m/n/10 tial regression analysis. For Policy Econ 125:102420.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
+[]\TU/Cambria(0)/m/n/10 Sander H, Polasky S, Haight RG (2010) The value
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
+\TU/Cambria(0)/m/n/10 of urban tree cover: A hedonic property price
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
+\TU/Cambria(0)/m/n/10 model in Ramsey and Dakota Counties, Min-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
+\TU/Cambria(0)/m/n/10 nesota, USA. Ecological Economics 69:1646–1656.
+ []
+
+
+Underfull \hbox (badness 7613) in paragraph at lines 378--379
+[]\TU/Cambria(0)/m/n/10 Czembrowski P, Kronenberg J (2016) Hedonic pric-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
+\TU/Cambria(0)/m/n/10 ing and different urban green space types and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
+\TU/Cambria(0)/m/n/10 sizes: Insights into the discussion on valuing
+ []
+
+
+Underfull \hbox (badness 4899) in paragraph at lines 378--379
+\TU/Cambria(0)/m/n/10 ecosystem services. Landsc Urban Plan 146:11–19.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--381
+[]\TU/Cambria(0)/m/n/10 Anderson ST, West SE (2006) Open space,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--381
+\TU/Cambria(0)/m/n/10 residential property values, and spatial con-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--381
+\TU/Cambria(0)/m/n/10 text. Reg Sci Urban Econ 36:773–789.
+ []
+
+[4]
+Underfull \hbox (badness 7576) in paragraph at lines 382--383
+[]\TU/Cambria(0)/m/n/10 Li W, Saphores J-DM, Gillespie TW (2015) A com-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
+\TU/Cambria(0)/m/n/10 parison of the economic benefits of urban green
+ []
+
+
+Underfull \hbox (badness 2088) in paragraph at lines 382--383
+\TU/Cambria(0)/m/n/10 spaces estimated with NDVI and with high-resolution
+ []
+
+
+Underfull \hbox (badness 5417) in paragraph at lines 382--383
+\TU/Cambria(0)/m/n/10 land cover data. Landsc Urban Plan 133:105–117.
+ []
+
+
+Underfull \hbox (badness 1394) in paragraph at lines 384--385
+\TU/Cambria(0)/m/n/10 vironmental Quality: Evidence from Beijing. J Urban
+ []
+
+
+Underfull \hbox (badness 7047) in paragraph at lines 386--387
+[]\TU/Cambria(0)/m/n/10 Martinez A de la I, Labib SM (2023) Demystifying
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 386--387
+\TU/Cambria(0)/m/n/10 normalized difference vegetation index (NDVI) for
+ []
+
+
+Underfull \hbox (badness 3019) in paragraph at lines 386--387
+\TU/Cambria(0)/m/n/10 greenness exposure assessments and policy interven-
+ []
+
+
+Underfull \hbox (badness 5147) in paragraph at lines 386--387
+\TU/Cambria(0)/m/n/10 tions in urban greening. Environ Res 220:115155.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--389
+[]\TU/Cambria(0)/m/n/10 Rhew IC, Vander Stoep A, Kearney A, et al
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--389
+\TU/Cambria(0)/m/n/10 (2011) Validation of the Normalized Difference
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--389
+\TU/Cambria(0)/m/n/10 Vegetation Index as a Measure of Neighbor-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--389
+\TU/Cambria(0)/m/n/10 hood Greenness. Ann Epidemiol 21:946–952.
+ []
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 390--391
+\TU/Cambria(0)/m/n/10 tial resolution of Normalized Difference Vegetation In-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--393
+[]\TU/Cambria(0)/m/n/10 CBS Statline (2022) Inwoners per Gemeente.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--393
+\TU/Cambria(0)/m/n/10 In: Centraal Bureau voor de Statistiek.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 392--393
+\TU/Cambria(0)/m/n/10 https://www.cbs.nl/nl-nl/visualisaties/dashboard-
+ []
+
+
+Underfull \hbox (badness 5036) in paragraph at lines 394--395
+[]\TU/Cambria(0)/m/n/10 28. CBS Statline (2022) Kerncijfers wijken en bu-
+ []
+
+
+Underfull \hbox (badness 2088) in paragraph at lines 394--395
+\TU/Cambria(0)/m/n/10 urten 2022. In: Centraal Bureau voor de Statistiek.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--401
+[]\TU/Cambria(0)/m/n/10 ArcGIS (2021) Stations in Nederland.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 406--407
+[]\TU/Cambria(0)/m/n/10 Municipality of Amsterdam (2023) Datacatalogus.
+ []
+
+
+Underfull \hbox (badness 8113) in paragraph at lines 408--409
+[]\TU/Cambria(0)/m/n/10 European Space Agency (2022) Sentinel-2 Level-2A.
+ []
+
+
+Overfull \hbox (12.32164pt too wide) in paragraph at lines 408--409
+\TU/Cambria(0)/m/n/10 https://planetarycomputer.microsoft.com/dataset/sentinel-
+ []
+
+
+Underfull \hbox (badness 3323) in paragraph at lines 410--411
+[]\TU/Cambria(0)/m/n/10 Daams MN, Sijtsma FJ, Veneri P (2019) Mixed mon-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
+\TU/Cambria(0)/m/n/10 etary and non-monetary valuation of attractive ur-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
+\TU/Cambria(0)/m/n/10 ban green space: A case study using Amsterdam
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
+\TU/Cambria(0)/m/n/10 house prices. Ecological Economics 166:106430.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 414--415
+[]\TU/Cambria(0)/m/n/10 Chen Y, Jones CA, Dunse NA, et al (2023) Hous-
+ []
+
+
+Underfull \hbox (badness 7238) in paragraph at lines 414--415
+\TU/Cambria(0)/m/n/10 ing Prices and the Characteristics of Nearby Green
+ []
+
+
+Underfull \hbox (badness 3168) in paragraph at lines 414--415
+\TU/Cambria(0)/m/n/10 Space: Does Landscape Pattern Index Matter? Evi-
+ []
+
+
+Underfull \hbox (badness 1789) in paragraph at lines 414--415
+\TU/Cambria(0)/m/n/10 dence from Metropolitan Area. Land (Basel) 12:496.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 416--417
+[]\TU/Cambria(0)/m/n/10 Zhang S, Wang L, Lu F (2019) Exploring Housing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 416--417
+\TU/Cambria(0)/m/n/10 Rent by Mixed Geographically Weighted Regression:
+ []
+
+
+Underfull \hbox (badness 2644) in paragraph at lines 416--417
+\TU/Cambria(0)/m/n/10 A Case Study in Nanjing. ISPRS Int J Geoinf 8:431.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+[]\TU/Cambria(0)/m/n/10 Sisman S, Aydinoglu AC (2022) A modelling ap-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+\TU/Cambria(0)/m/n/10 proach with geographically weighted regres-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+\TU/Cambria(0)/m/n/10 sion methods for determining geographic varia-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+\TU/Cambria(0)/m/n/10 tion and influencing factors in housing price: A
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+\TU/Cambria(0)/m/n/10 case in Istanbul. Land use policy 119:106183.
+ []
+
+
+Underfull \hbox (badness 1097) in paragraph at lines 422--423
+\TU/Cambria(0)/m/n/10 ception of green space. Land use policy 115:106048.
+ []
+
+
+Underfull \hbox (badness 1584) in paragraph at lines 426--427
+\TU/Cambria(0)/m/n/10 tial property values. Applied Geography 45:322–331.
+ []
+
+[5] [6
+
+]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 436.
+
+[7
+
+]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 476.
+
+File: figures/Economic_Value_Urban_Green_clip.png Graphic file (type bmp)
+<figures/Economic_Value_Urban_Green_clip.png>
+[8] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 35F64EAECC89D019CD7454572852A25C;1365.
+(rerunfilecheck)             Checksum: 58B6155EA545460DEF95022085E4F092;1469.
  ) 
 Here is how much of TeX's memory you used:
- 17161 strings out of 478674
- 318351 string characters out of 5847139
- 1873290 words of memory out of 5000000
- 37053 multiletter control sequences out of 15000+600000
+ 17159 strings out of 478674
+ 318319 string characters out of 5847139
+ 1875290 words of memory out of 5000000
+ 37051 multiletter control sequences out of 15000+600000
  518786 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,9n,122p,310b,338s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,10n,122p,324b,413s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (5 pages).
+Output written on paper.pdf (8 pages).
