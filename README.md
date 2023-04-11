@@ -26,7 +26,7 @@ The way the data analysis was performed is described in the figure
 below. Below headers provide some insight into the steps that were taken
 during each phase.
 
-![Overview of methods](Paper/figures/Methods.jpg)
+![Overview of methods](Paper/figures/Methods.png)
 
 ## Data Extraction
 
@@ -169,7 +169,7 @@ main output of the analysis was the significant coefficient map shown
 below.
 
 ![Overview of
-results](Paper/Figures/Economic_Value_Urban_Green_clip.png)
+results](Paper/figures/Economic_Value_Urban_Green_clip.png)
 
 The interpetation and conclusion of this plot is stated in chapter 3 and
 4 of the report, respectively.
