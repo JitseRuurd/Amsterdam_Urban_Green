@@ -1,12 +1,11 @@
 Explaining Amsterdam House Prices with Greenness
 ================
-Yúri Grings, Thomas Nibbering, Jitse Ruurd Nauta
 
 This study served as our term project performed at the end of the course
 Spatial Statistics and Machine Learning.
 
-Below a short overview of the structure of the GitHub page, methodology,
-data sources, and code is provided.
+Below is a short overview of the structure of the GitHub page,
+methodology, data sources, and code.
 
 Full paper can be found in the directory
 [here](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/Paper/Term-Project---Grings%2C-Nauta%2C-Nibbering.pdf)!
@@ -63,7 +62,8 @@ df = scraper.run()
 
 Lastly, the Remote Sensing data was extracted with below code in the
 [1.Pre-Processing
-script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb):
+script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb),
+and was inspired from the Planetary computer:
 
 ``` python
 ####

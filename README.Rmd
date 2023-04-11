@@ -1,7 +1,6 @@
 ---
 title: "Explaining Amsterdam House Prices with Greenness"
 subtitle: "An Empirical Study using Remote Sensing and Geographically Weighted Regression"
-author: "Yúri Grings, Thomas Nibbering, Jitse Ruurd Nauta"
 
 output: github_document
 ---
@@ -12,7 +11,7 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 
 This study served as our term project performed at the end of the course Spatial Statistics and Machine Learning.
 
-Below a short overview of the structure of the GitHub page, methodology, data sources, and code is provided.
+Below is a short overview of the structure of the GitHub page, methodology, data sources, and code.
 
 Full paper can be found in the directory [here](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/Paper/Term-Project---Grings%2C-Nauta%2C-Nibbering.pdf)!
 
@@ -50,7 +49,7 @@ scraper = FundaScraper(area="amsterdam", want_to="buy", find_past=False, n_pages
 df = scraper.run()
 ```
 
-Lastly, the Remote Sensing data was extracted with below code in the [1.Pre-Processing script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb):
+Lastly, the Remote Sensing data was extracted with below code in the [1.Pre-Processing script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb), and was inspired from the Planetary computer:
 
 ```{python eval = F}
 ####
