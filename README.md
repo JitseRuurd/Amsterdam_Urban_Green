@@ -23,8 +23,8 @@ Jitse Ruurd Nauta
 # Stucture of the directory
 
 The way the data analysis was performed is described in the figure
-below. Below headers provide some insight into the steps that were taken
-during each phase.
+below. The text after the figure provides some insight into the steps
+that were taken during each phase.
 
 ![Overview of methods](Paper/figures/Methods.png)
 
@@ -35,15 +35,17 @@ The used data regarding the Public Amenities can be found in the
 folder](https://github.com/JitseRuurd/Amsterdam_Urban_Green/tree/main/data/Amsterdam)
 and partly in the [1.c Data Enrichment
 script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1c.%20Data%20enrichment.R).
+The data sources consisted of the Municipality of Amsterdam, ArGIS and
+OSM.
 
 The House price data was extracted with the help of the Funda-Scraper
 package. This code was however modified to be able to extract a more
-precise adress line, which could be used for geocoding the adress to
+precise address line, which could be used for geocoding the address to
 spatial data.
 
 The [Funda scraper
 notebook](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/Scraper/Scraper.ipynb)
-provides code to copy the code of the enhanced funda scraper in the
+provides code to copy the code of the enhanced Funda scraper in the
 site-packages or dist-packages directory of python:
 
 ``` python
