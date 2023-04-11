@@ -4,6 +4,9 @@ Explaining Amsterdam House Prices with Greenness
 This study served as our term project performed at the end of the course
 Spatial Statistics and Machine Learning.
 
+The goal of this research was to extimate the effect of greenness on
+house prices in Amsterdam.
+
 Below is a short overview of the structure of the GitHub page,
 methodology, data sources, and code.
 
@@ -23,14 +26,14 @@ The way the data analysis was performed is described in the figure
 below. Below headers provide some insight into the steps that were taken
 during each phase.
 
-![Overview of study area](Paper/figures/Methods.jpg)
+![Overview of methods](Paper/figures/Methods.jpg)
 
 ## Data Extraction
 
 The used data regarding the Public Amenities can be found in the
 [/data/Amsterdam/
 folder](https://github.com/JitseRuurd/Amsterdam_Urban_Green/tree/main/data/Amsterdam)
-and partly in [the 1.c Data Enrichment
+and partly in the [1.c Data Enrichment
 script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1c.%20Data%20enrichment.R).
 
 The House price data was extracted with the help of the Funda-Scraper
@@ -61,7 +64,7 @@ df = scraper.run()
 ```
 
 Lastly, the Remote Sensing data was extracted with below code in the
-[1.Pre-Processing
+[1b.Pre-Processing
 script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb),
 and was inspired from the Planetary computer:
 
@@ -94,10 +97,16 @@ data = odc.stac.stac_load([selected_item], bands = ['red', 'green', 'blue', 'nir
 
 ## Data Enhancement
 
-To then use the data for the analysis, the [pre-processing R
+The data enhancement for the public amenities was performed in the [1.c
+Data enrichment
+script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1c.%20Data%20enrichment.R).
+The steps within this script consist of finding the nearest facility for
+every house regarding every public amenity included.
+
+To use the Funda.nl data for the analysis, the [pre-processing R
 script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1a.%20Pre-processing.R)
 provides the code to geocode the adresses from the Funda.nl data to
-latlon column.
+latlon column. Below chunk shows this code:
 
 ``` r
 df_geo <- df %>%
@@ -111,3 +120,56 @@ df_geo <- df %>%
     select(-optional1, -optional2, -optional3, -optional4, -optional5) %>%
     geocode(addresszip, method = "osm", lat = latitude, long = longitude)
 ```
+
+The pre-processing of the Remote sensing data consists of the
+computation of the NDVI value. This was done in the [1b.Pre-Processing
+script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb)
+with below code:
+
+``` python
+ndvi = xrspatial.multispectral.ndvi(data['nir'], data['red'])
+
+ndvi.values[ndvi.values < 0] = 0
+```
+
+Note that negative NDVI values where set to 0.
+
+## Hedonic pricing approach
+
+With the enhanced data, several models where used to estimate the effect
+of greenness on the house prices in Amsterdam.
+
+First, an OLS model was used:
+
+``` r
+equation <- price_m2 ~ bedroom + bathroom + living_area + house_age +
+    tram_dist + metro_dist + train_dist + ndvi300 + centre_dist +
+    zuid_dist + shops_dist + school_dist
+
+# OLS
+model <- lm(equation, data = funda_data)
+```
+
+After checking the Linear regression assumptions (results stated in the
+paper), an Geographically Weighted Regression (GWR) model was used as
+implemented below:
+
+``` python
+#Run basic GWR in parallel mode
+gwr_selector = Sel_BW(b_coords, b_y, b_X, kernel='bisquare')
+gwr_bw = gwr_selector.search(pool = pool, criterion = "AIC") 
+print(gwr_bw)
+gwr_results = GWR(b_coords, b_y, b_X, gwr_bw, kernel="bisquare").fit(pool = pool)
+```
+
+## Results
+
+With the final GWR model, the results of the analysis were created. The
+main output of the analysis was the significant coefficient map shown
+below.
+
+![Overview of
+results](Paper/Figures/Economic_Value_Urban_Green_clip.png)
+
+The interpetation and conclusion of this plot is stated in chapter 3 and
+4 of the report, respectively.
