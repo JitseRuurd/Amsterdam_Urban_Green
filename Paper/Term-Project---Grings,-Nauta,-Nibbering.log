@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  11 APR 2023 15:39
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  11 APR 2023 16:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1181,13 +1181,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 392--393
  []
 
 
-Underfull \hbox (badness 4913) in paragraph at lines 394--395
-[]\TU/Cambria(0)/m/n/10 28. CBS Statline (2022) Kerncijfers wijken en bu-
+Underfull \hbox (badness 10000) in paragraph at lines 394--395
+[]\TU/Cambria(0)/m/n/10 CBS Statline (2022) Kerncijfers wijken en buurten
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 394--395
-\TU/Cambria(0)/m/n/10 urten 2022. In: Centraal Bureau voor de Statistiek.
+Underfull \hbox (badness 10000) in paragraph at lines 394--395
+\TU/Cambria(0)/m/n/10 2022. In: Centraal Bureau voor de Statistiek.
  []
 
 

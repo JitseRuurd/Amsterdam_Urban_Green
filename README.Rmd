@@ -1,117 +1,101 @@
 ---
-title: "Explaining Noord-Holland house prices"
+title: "Explaining Amsterdam House Prices with Greenness"
+subtitle: "An Empirical Study using Remote Sensing and Geographically Weighted Regression"
 author: "Yúri Grings, Thomas Nibbering, Jitse Ruurd Nauta"
-date: "2023-03-21"
 
 output: github_document
 ---
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 
 ```
 
-A Spatial Statistics and Spatial Machine Learning approach.
+This study served as our term project performed at the end of the course Spatial Statistics and Machine Learning.
 
-Below the structure, results, and some code of our research can be found.
+Below a short overview of the structure of the GitHub page, methodology, data sources, and code is provided.
+
+Full paper can be found in the directory [here](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/Paper/Term-Project---Grings%2C-Nauta%2C-Nibbering.pdf)!
 
 Kind regards,
 
 Yúri Grings [Linkedin](https://www.linkedin.com/in/yurigrings/), Thomas Nibbering [Linkedin](https://www.linkedin.com/in/thomas-nibbering/), Jitse Ruurd Nauta [Linkedin](https://www.linkedin.com/in/jitseruurdnauta/) 
 
-# Paper
+# Stucture of the directory
+The way the data analysis was performed is described in the figure below. Below headers provide some insight into the steps that were taken during each phase.
 
-## Introduction
+![Overview of study area](Paper/figures/Methods.jpg)
 
-Green spaces play an important role in urban ecosystems. As a natural purifier for cities, these areas help control soil erosion [1], improve air quality [2, 3], reduce the urban heat island effect [4–6] and are considered to be aesthetically pleasing [7]. Moreover, green areas in cities are shown to provide notable improvements in residents’ physical and mental wellbeing [8, 9]. As the benefits of greenness in urban areas are increasingly recognised, numerous cities have developed urban greening programs to expand parks, build green roofs or plant more trees [10–12]. However, evaluating the effects of these initiatives to justify their costs remains a challenge, partly due to data sparsity. 
+## Data Extraction
 
-A review of literature revealed that there are several studies that aimed to examine the effect of urban green spaces on residential house prices [13–19]. Often these studies adopted a hedonic pricing approach to estimate the economic value that individuals place on particular property characteristics, as reflected in the real-estate prices [14, 15]. However, most literature only focused on the distance to urban green areas as a valuation indicator [20, 21]. Here, a few studies considered a more comprehensive appreciation of greenness in cities by employing vegetation indices and the interaction with property and public amenities [16, 17, 22, 23]. 
+The used data regarding the Public Amenities can be found in the [/data/Amsterdam/ folder](https://github.com/JitseRuurd/Amsterdam_Urban_Green/tree/main/data/Amsterdam) and partly in [the 1.c Data Enrichment script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1c.%20Data%20enrichment.R).
 
-Among the literature that explored the property value premium of urban green spaces more exhaustive, most adopted the normalised difference vegetation index (NDVI) [16, 22, 23]. Here, the relative abundance of vegetation was measured across varying buffer distances using remote sensing systems with various spatial resolutions. Moreover, most of these studies also considered the interaction with residential and public amenities, such as the number of rooms or proximity to convenience stores [16, 23]. However, these analyses were mainly performed in cities with conservative urban greening programs in place [23]. Lastly, the adoption of NDVI for identifying (urban) green spaces is often criticised due to its sensitivity to varying spatial scales and inability to differentiate between vegetation types [24]. Nonetheless, the index is widely accepted and can be considered almost a standard approach [25, 26]. 
+The House price data was extracted with the help of the Funda-Scraper package. This code was however modified to be able to extract a more precise adress line, which could be used for geocoding the adress to spatial data.
 
-Based on the examined literature, a hedonic pricing approach in combination with the normalised difference vegetation index and the interaction with particular amenities emerges as an effective method to estimate the effect of urban green spaces on residential house prices. Given the limited literature available on property value premiums associated with greenness exposure in cities with more progressive urban greening programs, this study aims to answer the research question of what the economic value of urban green spaces in the city of Amsterdam is in the year 2023, as reflected in the real-estate prices.
+The [Funda scraper notebook](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/Scraper/Scraper.ipynb) provides code to copy the code of the enhanced funda scraper in the site-packages or dist-packages directory of python:
 
-## Methods
+```{python eval = F}
+#import function to copy the scraper folder into the dist-packages or site-packages libraries
+from copy_scraper import copy_scraper
+copy_scraper()
+```
 
-### Study Area
+To extract the data for this project, below query was used:
 
-The geographical scope in this study concentrated on the city of Amsterdam, as presented in Figure 1. The city is situated in the Western part of the Netherlands and home to almost 880,000 residents [27] that occupy a space of 219.3 km2  [28]. As a result, the city is considered one of the most densely populated in the country. Surrounding the residential areas, the vast majority of land is occupied with vegetation [29]. Moreover, the municipality has progressive urban greening programs in place, stimulating and obligating residents and city districts to participate in greening initiatives [12]. As a result, these policies aimed at expanding urban green spaces have the potential to increase nearby housing premiums. 
-
-![Overview of study area](Paper/figures/study_area.png)
-
-
-### Data
-
-In this study, property listings were obtained from Funda.nl, a Dutch online real-estate platform [30]. Here, data included the sale price and property characteristics of residential houses in Amsterdam listed on the platform on 31 March 2023. Moreover, information about multiple public amenities in Amsterdam were obtained from a variety of sources, including ArcGIS [31], OpenStreetMap.org [32, 33] and the municipality of Amsterdam [34]. Selection of public amenities, used as controlling variables, were based on applicable literature, as presented in Table 1. Adjusting for these variables was done to limit the effect of potential confounders on the association of interest. Finally, remote sensing images in red and near-infrared were obtained from Sentinel-2 in August 2022 [35]. This allowed on the capitalisation of high greenness levels in that period, leading to improved differentiation between green and urban areas. 
-
-
-### Data Enrichment
-
-
-![Illustrative figure of using focal statistics as a buffer function](Paper/figures/raster5.png)
-
-
-
-## We used the Funda-Scraper package to scrape our data
-
-The query below was used to scrape our final research data on (28-03-2023).
-
-```{python eval = FALSE}
-scraper = FundaScraper(area="provincie-noord-holland", want_to="buy", find_past=False,\
-n_pages = 1000)
+```{python eval = F}
+####
+# 2. Data
+####
+# Obtain Data
+scraper = FundaScraper(area="amsterdam", want_to="buy", find_past=False, n_pages = 1000)
 df = scraper.run()
 ```
-Note that this is not the original Funda-Scraper code underneath. The Function is adjusted to contain additional adress information, compared to the origional function. Code is included in the Scraper.ipynb file to copy the updated package into the site-packages directory of python.
 
-## A pre-processing pipeline is used to enrich data
+Lastly, the Remote Sensing data was extracted with below code in the [1.Pre-Processing script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1b.%20Pre-Processing.ipynb):
 
-OSM was used to enrich the scraped data. We geocode adressess into geometries objects for in order to make use of the geospatial models.
-Additional spatial data includes:
+```{python eval = F}
+####
+# 1. Obtain Data
+####
+# Define Catalog
+catalog = pystac_client.Client.open("https://planetarycomputer.microsoft.com/api/stac/v1",modifier=planetary_computer.sign_inplace)
 
-* Distance to public transport (Bus, Subway, and Train)
-* Distance to public services (Schools, Universities, Shopping centres)
+# Obtain Area of Interest
+bbox_of_interest = [4.541943,52.193249,5.212109,52.532048] 
+time_of_interest = "2022-06-01/2022-09-30" 
 
-## This enriched data is used to fit an OLS model
+# Search Data
+search = catalog.search(collections=["sentinel-2-l2a"],
+                        bbox=bbox_of_interest,
+                        datetime=time_of_interest,
+                        query={"eo:cloud_cover": {"lt": 20}})
 
-### OLS on scraped data
+# Obtain Data
+items = search.item_collection()
 
-```{r eval = FALSE}
-model <- lm(price~ room + bedroom + bathroom + living_area + house_age, data = funda_data)
+# Select Item from List
+selected_item = items[4]
+
+# Obtain Bands of Interest
+data = odc.stac.stac_load([selected_item], bands = ['red', 'green', 'blue', 'nir'], bbox = bbox_of_interest).isel(time=0)
 ```
 
-### OLS on enriched data
+## Data Enhancement 
 
-```{r eval = FALSE}
-model <- lm(price~ room + bedroom + bathroom + living_area + house_age + bus_dist +subway_dist + train_dist + university_dist + school_dist + mall_dist + supermarket_dist, data = funda_data)
+To then use the data for the analysis, the [pre-processing R script](https://github.com/JitseRuurd/Amsterdam_Urban_Green/blob/main/1a.%20Pre-processing.R) provides the code to geocode the adresses from the Funda.nl data to latlon column.
+
+```{r eval = F}
+df_geo <- df %>% 
+  separate(address_line, c("zip", "letters", "city", "optional1","optional2", "optional3", "optional4", "optional5"), " ") %>% 
+  mutate(addressline_city = paste(city, optional1, optional2, optional3, optional4, optional5),
+         addressline_zip = paste(zip, letters),
+         addresszip = paste0(address, ", ",addressline_zip, ", ", addressline_city)) %>% 
+  select(-optional1, -optional2, -optional3, -optional4, -optional5) %>% 
+  geocode(addresszip, method = 'osm', lat = latitude , long = longitude)
 ```
 
 
-### GWR model to adjust for spatial component in the data
 
-To look at local spatial dependence, a GWR model was fit on the data.
 
-```{python eval = FALSE}
-#Run basic GWR in parallel mode
 
-gwr_selector = Sel_BW(b_coords, b_y, b_X)
-gwr_bw = gwr_selector.search(pool = pool)
-print(gwr_bw)
-gwr_results = GWR(b_coords, b_y, b_X, gwr_bw).fit(pool = pool)
-    
-```
 
-### MGWR model to adjust for spatial component in the data
-
-As it would be more realistic to have different band-widths for every feature, MGWR was used
-
-```{python eval = FALSE}
-#run MGWR in parallel mode. Note: max_iter_multi needs to be specified
-
-mgwr_selector = Sel_BW(b_coords, b_y, b_X, multi=True)
-mgwr_bw = mgwr_selector.search(pool=pool, max_iter_multi=200, criterion = "AICc") 
-print(mgwr_bw)
-mgwr_results = MGWR(b_coords, b_y, b_X, selector=mgwr_selector).fit(pool=pool)
-    
-```
 

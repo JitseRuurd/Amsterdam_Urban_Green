@@ -186,7 +186,7 @@ Distance to Convenience Stores (m) [38] & 266.7         & 206.9       & Euclidea
 
 \item CBS Statline (2022) Inwoners per Gemeente. In: Centraal Bureau voor de Statistiek. https://www.cbs.nl/nl-nl/visualisaties/dashboard-bevolking/regionaal/inwoners. Accessed 6 Apr 2023
 
-28. 	CBS Statline (2022) Kerncijfers wijken en buurten 2022. In: Centraal Bureau voor de Statistiek. https://opendata.cbs.nl. Accessed 6 Apr 2023
+\item CBS Statline (2022) Kerncijfers wijken en buurten 2022. In: Centraal Bureau voor de Statistiek. https://opendata.cbs.nl. Accessed 6 Apr 2023
 
 \item Department of Planning and Sustainability (2018) Evaluatie project Groen in de buurt. Amsterdam
 
