@@ -33,7 +33,7 @@ tm_shape(PC4, bbox = bbox_new)+
             legend.title.size = 1)
 
 ################## create coef plot for ndvi for paper
-paper_plot <- tm_shape(PC4, bbox = bbox_new) + 
+paper_plot <- tm_shape(PC4) + 
   tm_polygons(col = 'lightgrey') + 
   tm_shape(gwr_result %>% filter(ndvi300_TV < -1.96 | ndvi300_TV > 1.96)) + 
   tm_dots(col = 'ndvi300', 
