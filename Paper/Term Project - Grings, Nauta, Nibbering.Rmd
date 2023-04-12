@@ -63,7 +63,7 @@ knitr::opts_chunk$set(tidy.opts=list(width.cutoff=30),tidy=TRUE)
   
   Furthermore, urban green vegetation was measured using NDVI. This vegetation index was derived from the Sentinel-2 satellite, based on Equation 1. Here, N and R refer to the spectral reflectance measurements obtained in the red and near-infrared regions, respectively. In general, the index ranges from -1.0 to 1.0 with positive values indicating greenness. The usage of this system provided more accurate images for identifying green spaces, i.e. 10x10m, compared to the moderate resolution of Landsat, i.e. 30x30m [37].  
 
-$$ NDVI= \frac{(N - R)}{(N + R)} $$
+$$ NDVI= \frac{(N - R)}{(N + R)}  \:\:\:\:\:\:\:\:(1) $$
   Surrounding the residential properties, mean values of NDVI were obtained at varying spatial scales, i.e. 100, 300 and 500m. In doing so, the variation of greenness around the property could be included in the analysis. Moreover, the usage of these thresholds ensured that the results were less vulnerable to scaling effects given the resolution of the data [37]. Finally, based on the extraction and enhancement of data, several independent variables were identified and constructed, as presented in Table 1. These variables were included in the hedonic pricing model, as will be elaborated on in Section 2.4, to either adjust or explain the economic value of urban green areas in Amsterdam. 
 
 ```{=latex}
