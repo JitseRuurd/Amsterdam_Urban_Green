@@ -4,7 +4,7 @@ Explaining Amsterdam House Prices with Greenness
 This study served as our term project performed at the end of the course
 Spatial Statistics and Machine Learning.
 
-The goal of this research was to extimate the effect of greenness on
+The goal of this research was to estimate the effect of greenness on
 house prices in Amsterdam.
 
 Below is a short overview of the structure of the GitHub page,
