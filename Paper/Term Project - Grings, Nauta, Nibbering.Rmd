@@ -112,12 +112,10 @@ Distance to Convenience Stores (m) [38] & 266.7         & 206.9       & Euclidea
 
 # 3. Results and Discussion
   The results showed that urban green spaces provide significant economic value, indicated by their positive association with residential property prices in the local regression model. However, this association was not consistent across all locations, as presented in Figure 3. Since the local model captured both the spatial dependence and non-stationarity present in the data, this section primarily focuses on the results of this model. A detailed overview of both models is presented in Appendix I. \linebreak 
+  
+  Results of the local regression model revealed that urban green spaces were significantly associated with residental house prices at a 300m spatial scale (p < 0.05). Here, property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. This result aligns with previous studies [23, 36, 39, 40]. One explanation for this wide range might be related to the direct-use value placed on these areas [23]. In other words, particular green areas might attract more residents to benefit from the perceived value of greenness, prompting more people to purchase houses nearby [44]. Hence, highlighting the spatial variability and non-stationary nature of the association of interest, as illustrated in Appendix II. Finally, the findings of this study provide empirical evidence of the capitalisation of greenness characteristics in residential real-estate prices. \linebreak 
 
-  Results of the local regression revealed that urban green spaces were significantly associated with residential house prices at a 300m spatial scale (p < 0.05). Here, property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. These results align with previous studies, highlighting the non-stationary nature of the association of interest [23, 36, 39, 40], as illustrated in Appendix II. As a result, the findings of this study provide empirical evidence of the capitalisation of greenness characteristics in residential property prices. \linebreak 
-
-  Moreover, the results indicated a positive association between the extent of urban green areas and residential property premiums, i.e. listings located near parks indicated higher premiums compared to smaller areas of greenness. One explanation for this finding is the direct-use value placed on these sites [23]. In other words, more extensive green areas might attract more residents to benefit from the perceived value of greenness, prompting more people to purchase houses nearby [44]. \linebreak 
-
-  Finally, limitations of this study were three-fold. First, distinctions between vegetation types were not considered. However, it was demonstrated to affect the scope and magnitude on house prices differently [45]. Second, the presence of property and neighbourhood characteristics that were unobserved but associated with urban green space and/or house prices may have biased the estimations. Lastly, the temporal dimension was not considered in this study. Hence, this may limit the generalisability of the study as the dynamic nature of the data might not be captured.
+  Limitations of this study were three-fold. First, distinctions between vegetation types were not considered. However, it was demonstrated to affect the scope and magnitude on house prices differently [45]. Second, the presence of property and neighbourhood characteristics that were unobserved but associated with urban green space and/or house prices may have biased the estimations. Lastly, the temporal dimension was not considered in this study. Hence, this may limit the generalisability of the study as the dynamic nature of the data might not be captured.
 
 ```{=latex}
 \begin{figure}[]
@@ -128,7 +126,10 @@ Distance to Convenience Stores (m) [38] & 266.7         & 206.9       & Euclidea
 ```
 
 # 4. Conclusion
-  This study aimed to examine the economic value of urban green spaces in Amsterdam, as reflected in the real-estate prices of 2023. Here, property characteristics, public amenities and greenness measurements were obtained from a variety of sources. In line with topical literature, independent variables were identified and constructed to either adjust or explain the economic value of urban green spaces. In doing so, the local hedonic pricing model revealed that urban green spaces provided significant economic value. However, this association was not consistent across all locations, as the property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. The main theoretical explanation for this range might be related to the direct-use value placed on these areas. As a result, the outcomes of this study provide empirical evidence for the capitalisation of greenness characteristics in residential real-estate.    
+This study aimed to examine the economic value of urban green spaces in Amsterdam, as reflected in the real-estate prices of 2023. Here, property characteristics, public amenities and greenness measurements were obtained from a variety of sources. In line with topical literature, independent variables were identified and constructed to either adjust or explain the economic value of urban green spaces. In doing so, the local hedonic pricing model revealed that urban green spaces provided significant economic value. However, this association was not consistent across all locations, as the property premiums per m2 ranged from -82,657.5 to 125,978.4 euros for each unit increase in the vegetation index. The main theoretical explanation for this range might be related to the direct-use value placed on these areas. As a result, the outcomes of this study provide empirical evidence for the capitalisation of greenness characteristics in residential real-estate. \linebreak   
+
+Further research may consider the usage of eye-level greenness in addition to aerial-view greenness, as it was demonstrated that this type of information might be an important valuation indicator of residential real-estate prices [46, 47]. Moreover, additional studies may consider the relationship between various types of urban green vegetation and property valuations. 
+
 
 
 # 5. References
@@ -222,6 +223,11 @@ Distance to Convenience Stores (m) [38] & 266.7         & 206.9       & Euclidea
 \item Lin I-H, Wu C, De Sousa C (2013) Examining the economic impact of park facilities on neighboring residential property values. Applied Geography 45:322–331. https://doi.org/10.1016/j.apgeog.2013.10.003
 
 \item Crompton JL (2001) The Impact of Parks on Property Values: A Review of the Empirical Evidence. J Leis Res 33:1–31. https://doi.org/10.1080/00222216.2001.11949928
+
+\item Ki D, Lee S (2021) Analyzing the effects of Green View Index of neighborhood streets on walking time using Google Street View and deep learning. Landsc Urban Plan 205:103920. https://doi.org/10.1016/j.landurbplan.2020.103920
+
+\item Wang G (2023) The effect of environment on housing prices: Evidence from the Google Street View. J Forecast 42:288–311. https://doi.org/10.1002/for.2907
+
 \end{enumerate}
 ```
 \onecolumn \newpage
