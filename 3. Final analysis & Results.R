@@ -1,6 +1,7 @@
 easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "spdep", 'stars')
 
 #Visualize results GWR model
+unda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
 gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi300_m2.gpkg")
 PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_300m.tif")
@@ -74,3 +75,26 @@ tm_shape(ndvi, bbox = bbox_new)+
             legend.outside.position = c('right', 'center'),
             legend.outside = T)
 
+################## create plot for house prices for paper
+paper_plot_prices <- tm_shape(PC4) + 
+  tm_polygons(col = 'lightgrey') + 
+  tm_shape(funda_data) + 
+  tm_dots(col = "price_m2", 
+          size = 0.2,
+          midpoint = 0, 
+          title = "House Price sq.m. (in euros)",
+          palette = 'Spectral',
+          shape = 21) + 
+  tm_layout(title.position = c('center', 'top'),
+            title.fontface = 'bold',
+            title.fontfamily = 'Times',
+            legend.title.fontface = 'bold',
+            legend.title.fontfamily = 'Times',
+            legend.text.fontfamily = 'Times',
+            legend.position = c(0.03, -0.01),
+            legend.text.size = 0.5,
+            legend.title.size = 0.9,
+            frame = F)
+
+paper_plot_prices
+tmap_save(paper_plot_prices, 'Amsterdam_house_prices_sqm.png', width = 5, height = 3.5)
