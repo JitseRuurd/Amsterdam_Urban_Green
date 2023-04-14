@@ -1,7 +1,7 @@
 easypackages::packages("tidyverse", "sf", "mapview", "RColorBrewer", "tmap", "spdep", 'stars')
 
 #Visualize results GWR model
-unda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
+funda_data <- st_read("data/Houseprices/funda_buy_amsterdam_31-03-2023_full_distances.gpkg")
 gwr_result<- st_read("data/models/gwr_results_amsterdam_ndvi300_m2.gpkg")
 PC4 <- st_transform(st_read("data/Amsterdam/PC4.json"), crs = 28992)
 ndvi <- read_stars("data/Greenness/NDVI_Amsterdam_300m.tif")
@@ -41,7 +41,7 @@ paper_plot <- tm_shape(PC4) +
   tm_dots(col = 'ndvi300', 
           size = 0.2,
           midpoint = 0, 
-          title = "Residential Property Premiums (in euros)",
+          title = "Residential Property Premiums\n(in euros per m²)",
           palette = 'Spectral',
           shape = 21) + 
   tm_layout(title.position = c('center', 'top'),
@@ -52,7 +52,7 @@ paper_plot <- tm_shape(PC4) +
             legend.text.fontfamily = 'Times',
             legend.position = c(0.03, -0.01),
             legend.text.size = 0.5,
-            legend.title.size = 0.9,
+            legend.title.size = 0.8,
             frame = F)
 
 paper_plot
@@ -61,17 +61,18 @@ paper_plot
 tmap_save(paper_plot, 'Economic_Value_Urban_Green.png', width = 5, height = 3.5)
 
 ################## create plot for ndvi for paper
-tm_shape(ndvi, bbox = bbox_new)+
+ndvi_plot <- tm_shape(ndvi, bbox = bbox_new)+
   tm_raster(palette = "YlGn", title = "NDVI") +
   tm_shape(PC4, bbox = bbox_new)+
   tm_polygons(col = "white", alpha = 0, border.col = "black")+
   tm_layout(title.fontfamily = "Times",
             title.fontface = "bold",
+            legend.title.fontface = 'bold',
             legend.text.fontfamily = "Times",
             legend.title.fontfamily = "Times",
-            legend.text.size = 0.75,
-            legend.title.size = 1,
-            frame = F,
+            legend.text.size = 0.5,
+            legend.title.size = 0.8,
+            frame = T,
             legend.outside.position = c('right', 'center'),
             legend.outside = T)
 
@@ -80,10 +81,10 @@ paper_plot_prices <- tm_shape(PC4) +
   tm_polygons(col = 'lightgrey') + 
   tm_shape(funda_data) + 
   tm_dots(col = "price_m2", 
-          size = 0.2,
-          midpoint = 0, 
-          title = "House Price sq.m. (in euros)",
-          palette = 'Spectral',
+          size = 0.15,
+          title = "Residential Property Prices\n(in euros per m²)",
+          palette = 'YlOrRd',
+          breaks = c(0,2500,5000,7500,10000,12500,15000,20000,30000),
           shape = 21) + 
   tm_layout(title.position = c('center', 'top'),
             title.fontface = 'bold',
@@ -93,8 +94,9 @@ paper_plot_prices <- tm_shape(PC4) +
             legend.text.fontfamily = 'Times',
             legend.position = c(0.03, -0.01),
             legend.text.size = 0.5,
-            legend.title.size = 0.9,
-            frame = F)
+            legend.title.size = 0.8,
+            frame = T,
+            legend.outside = T)
 
-paper_plot_prices
-tmap_save(paper_plot_prices, 'Amsterdam_house_prices_sqm.png', width = 5, height = 3.5)
+price_ndvi <- tmap_arrange(paper_plot_prices, ndvi_plot)
+tmap_save(price_ndvi, 'Amsterdam_house_prices_sqm.png')
