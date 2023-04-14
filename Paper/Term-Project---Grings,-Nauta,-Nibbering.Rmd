@@ -43,12 +43,12 @@ Based on the examined literature, a hedonic pricing approach in combination with
 
 # 2. Methods
 ## 2.1 Study Area
-The geographical scope in this study concentrated on the city of Amsterdam, as presented in Figure 1. The city is situated in the Western part of the Netherlands and home to almost 880,000 residents [27], occupying a space of 219.3 km$^2$ [28]. Surrounding the residential areas, the vast majority of land is occupied with vegetation [29]. Moreover, the municipality has progressive urban greening programs in place, stimulating and obligating residents and city districts to participate in greening initiatives [12]. As a result, these policies aimed at expanding urban green spaces may have the potential to increase nearby housing premiums.    
+The geographical scope in this study concentrated on the city of Amsterdam, as presented in Figure 1. The city is situated in the Western part of the Netherlands and home to almost 880,000 residents [27], occupying a space of 219.3 km$^2$  [28]. Surrounding the residential areas, the vast majority of land is occupied with vegetation [29]. Moreover, the municipality has progressive urban greening programs in place, stimulating and obligating residents and city districts to participate in greening initiatives [12]. As a result, these policies aimed at expanding urban green spaces may have the potential to increase nearby housing premiums.    
 
 ```{=latex}
-\begin{figure}[ht]
+\begin{figure}[h]
   \centering
-  \includegraphics[width=\linewidth]{figures/study_area.png}
+  \includegraphics[width=.8\linewidth]{figures/study_area.png}
   \caption{Overview of the study area.}
 \end{figure}
 ```

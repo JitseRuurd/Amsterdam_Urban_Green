@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  14 APR 2023 11:03
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  14 APR 2023 11:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -895,21 +895,33 @@ Underfull \hbox (badness 1147) in paragraph at lines 123--132
 
 LaTeX Font Info:    Font shape `TU/Cambria(0)/b/n' will be
 (Font)              scaled to size 12.0pt on input line 137.
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 150.
-
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.58138pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.41527pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.8316pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.58212pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.4158pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 10.82947pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.58063pt on input line 142.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.41473pt on input line 142.
 File: figures/study_area.png Graphic file (type bmp)
 <figures/study_area.png>
-
-Underfull \hbox (badness 4242) in paragraph at lines 159--172
-[]\TU/Cambria(0)/m/n/10 A total of 1,719 property listings were obtained from
- []
-
 [1
 
 
 ]
+Underfull \hbox (badness 4242) in paragraph at lines 159--172
+[]\TU/Cambria(0)/m/n/10 A total of 1,719 property listings were obtained from
+ []
+
+
 Underfull \hbox (badness 2922) in paragraph at lines 176--186
 []\TU/Cambria(0)/m/n/10 To examine the economic value of urban green spaces
  []
@@ -949,22 +961,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 176--186
 
  []
 
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.58138pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.41527pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.8316pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.58212pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.4158pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.82947pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.58063pt on input line 196.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.41473pt on input line 196.
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 208.
@@ -1530,7 +1526,7 @@ Package rerunfilecheck Info: File `Term-Project---Grings,-Nauta,-Nibbering.out' 
 Here is how much of TeX's memory you used:
  17167 strings out of 478674
  319281 string characters out of 5847139
- 1873290 words of memory out of 5000000
+ 1871290 words of memory out of 5000000
  37058 multiletter control sequences out of 15000+600000
  518786 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
