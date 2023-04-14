@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  13 APR 2023 11:34
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.4.4)  14 APR 2023 11:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1023,8 +1023,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 275--283
  []
 
 [2]
-Underfull \hbox (badness 2401) in paragraph at lines 284--298
-\TU/Cambria(0)/m/n/10 green spaces were significantly associated with residental
+Underfull \hbox (badness 1496) in paragraph at lines 284--298
+\TU/Cambria(0)/m/n/10 green spaces were significantly associated with residential
  []
 
 
@@ -1033,8 +1033,8 @@ Underfull \hbox (badness 2512) in paragraph at lines 284--298
  []
 
 
-Underfull \hbox (badness 1742) in paragraph at lines 284--298
-\TU/Cambria(0)/m/n/10 variability and non-stationary nature of the association of
+Underfull \hbox (badness 1237) in paragraph at lines 284--298
+\TU/Cambria(0)/m/n/10 dependent and non-stationary nature of the association of
  []
 
 
@@ -1051,8 +1051,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 284--298
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 309.
 
-File: figures/Economic_Value_Urban_Green_clip.png Graphic file (type bmp)
-<figures/Economic_Value_Urban_Green_clip.png>
+File: figures/Economic_Value_Urban_Green.png Graphic file (type bmp)
+<figures/Economic_Value_Urban_Green.png>
 
 Underfull \hbox (badness 1137) in paragraph at lines 318--333
 \TU/Cambria(0)/m/n/10 green spaces in Amsterdam, as reflected in the real-estate
@@ -1521,19 +1521,19 @@ Underfull \hbox (badness 1062) in paragraph at lines 436--437
 ] [7
 
 ]
-File: figures/NDVI_clip.png Graphic file (type bmp)
-<figures/NDVI_clip.png>
+File: figures/Amsterdam_house_prices_sqm.png Graphic file (type bmp)
+<figures/Amsterdam_house_prices_sqm.png>
 [8] (./Term-Project---Grings,-Nauta,-Nibbering.aux)
 Package rerunfilecheck Info: File `Term-Project---Grings,-Nauta,-Nibbering.out' has not changed.
-(rerunfilecheck)             Checksum: 58B6155EA545460DEF95022085E4F092;1469.
+(rerunfilecheck)             Checksum: 6CB99344E57A6A635BA9836BEADCB93B;1992.
  ) 
 Here is how much of TeX's memory you used:
  17167 strings out of 478674
- 319092 string characters out of 5847139
+ 319281 string characters out of 5847139
  1873290 words of memory out of 5000000
  37058 multiletter control sequences out of 15000+600000
  518786 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,10n,122p,358b,413s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,10n,122p,517b,413s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on Term-Project---Grings,-Nauta,-Nibbering.pdf (8 pages).
