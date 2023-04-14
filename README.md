@@ -1,4 +1,4 @@
-Explaining Amsterdam House Prices with Greenness
+Estimating the Effect of Urban Green Spaces on Residential House Prices in Amsterdam
 ================
 
 This study served as our term project performed at the end of the course
