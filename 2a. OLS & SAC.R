@@ -48,6 +48,33 @@ houseprices_plot <- tm_shape(PC4, bbox = bbox_new)+
 
 tmap_arrange(ndvi_plot,houseprices_plot, asp = NULL, ncol = 2)
 
+#obtain maps for paper representing spatial variability and non-stationarity
+ndvi_plot <- tm_shape(ndvi, bbox = bbox_new) + 
+             tm_raster(palette = "YlGn", title = "NDVI") +
+             tm_shape(PC4, bbox = bbox_new) + 
+             tm_polygons(col = 'white', alpha = 0, border.col = "black") + 
+             tm_layout(legend.text.fontfamily = "Times",
+                       legend.title.fontfamily = "Times",
+                       legend.outside = T,
+                       frame = F)
+ndvi_plot
+
+house_plot <- tm_shape(PC4, bbox = bbox_new) + 
+              tm_polygons(col = 'lightgrey') + 
+              tm_shape(funda_data) + 
+              tm_dots(col = 'price_m2',
+                      size = 0.1,
+                      shape = 21,
+                      palette = 'YlOrRd',
+                      title = 'Property Price (per m²)') + 
+              tm_layout(title = 'B - Property Prices'
+                        legend.text.fontfamily = "Times",
+                        legend.title.fontfamily = "Times",
+                        legend.outside = T,
+                        frame = F)
+
+house_plot
+
 #test global spatial autocorrelation with Moran's I
 funda_KNN <- knearneigh(funda_data, k=5) #Identify k nearest neighbours for spatial weights 
 funda_KNN_list <- knn2nb(funda_KNN, sym=T) #Neighbours list from knn object
